@@ -47,8 +47,6 @@
        T_STRINGCONST
        T_HEXADECIMALCONST
        T_DECIMALCONST
-       ERROR
-
 
 
 %%
@@ -59,14 +57,14 @@ program:  T_CLASS T_PROGRAMCLASS T_LCB field_decls method_decls T_RCB;
 field_decls : | field_decl field_decls;
 field_decl : type variables T_SEMICOLON;
 variables : variable | variable T_COMMA variables;
-variable :  T_ID | T_ID T_LB int_literal T_RB;
+variable :  id | id T_LB int_literal T_RB;
 
 
 //method decleration
 method_decls : | method_decl method_decls;
 method_decl : method_type method_namee T_LP args T_RP block;
 method_type : type | T_VOIDTYPE;
-method_namee : T_MAINFUNC | T_ID; 
+method_namee : T_MAINFUNC | id; 
 args : | arg ',' args;
 arg : type id;
 
@@ -77,7 +75,7 @@ block: T_LCB var_decls statements T_RCB;
 
 //variable declerations
 var_decls: | var_decl var_decls;
-var_decl: type id T_SEMICOLON;
+var_decl: type ids T_SEMICOLON;
 ids: id | id T_COMMA ids;
 
 //type
@@ -103,7 +101,7 @@ assign_op: T_ASSIGNOP | T_MINUSASSIGNOP | T_PLUSASSIGNOP;
 
 
 //method call
-method_call: method_name T_LP exprs T_RP | T_CALLOUT T_LP string_literal; callout_args T_RP;
+method_call: method_name T_LP exprs T_RP | T_CALLOUT T_LP string_literal callout_args T_RP;
 
 
 //method name
@@ -115,14 +113,14 @@ location: id | id T_LB expr T_RB;
 
 
 //expressions
-exprs: | expr exprs;
-expr: location |
-      method_call |
-      literal |
-      expr bin_op expr |
-      T_MINUSOP expr |
-      T_LOGICOP expr |
-      T_LP expr T_RP ;
+exprs: | expr T_COMMA exprs;
+expr: expr bin_op expr1 | expr1;
+expr1:  location |
+        method_call |
+        literal |
+        T_MINUSOP expr1 |
+        T_LOGICOP expr1 |
+        T_LP expr T_RP;
 
 
 //callout arguments
@@ -159,7 +157,7 @@ id: T_ID;
 
 
 //int literal
-int_literal: T_DECIMALCONST | T_HEXADECIMALCONST;
+int_literal: deciamla_literal | hex_literal;
 
 
 //decimal literal
@@ -180,9 +178,6 @@ char_literal: T_CHARCONST;
 
 //string literal
 string_literal: T_STRINGCONST;
-
-
-eror: ERROR {yyerror($1);}
 %%
 
 
