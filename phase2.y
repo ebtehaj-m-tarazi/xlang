@@ -1,60 +1,74 @@
 %{
+  #include <stdio.h>
   #include <iostream>
   using namespace std;
 
   extern int yylex();
   extern int yyparse();
+  extern FILE *yyin;
 
   void yyerror(const char *s);
+
+	extern int yylineno;
 %}
 
-%token T_BOOLEANTYPE
-       T_BREAKSTMT
-       T_CALLOUT
-       T_CLASS
-       T_CONTINUESTMT
-       T_ELSECONDITION
-       T_BOOLEANCONST
-       T_LOOP
-       T_IFCONDITION
-       T_INTTYPE
-       T_RETURN
-       T_VOIDTYPE
-       T_PROGRAMCLASS
-       T_MAINFUNC
-       T_ID
-       T_ASSIGNOP
-       T_MINUSASSIGNOP
-       T_PLUSASSIGNOP
-       T_LOGICOP
-       T_EQUALITYOP
-       T_RELATIONOP
-       T_CONDITIONOP
-       T_MODULSOP
-       T_DIVISIONOP
-       T_MULTIPLEOP
-       T_MINUSOP
-       T_PLUSOP
-       T_LCB
-       T_RCB
-       T_LB
-       T_RB
-       T_LP
-       T_RP
-       T_SEMICOLON
-       T_COMMA
-       T_CHARCONST
-       T_STRINGCONST
-       T_HEXADECIMALCONST
-       T_DECIMALCONST
+%union{
+  char *str;
+  long long int number;
+}
+
+%token<str> T_BOOLEANTYPE
+%token<str> T_BREAKSTMT
+%token<str> T_CALLOUT
+%token<str> T_CLASS
+%token<str> T_CONTINUESTMT
+%token<str> T_ELSECONDITION
+%token<str> T_BOOLEANCONST
+%token<str> T_LOOP
+%token<str> T_IFCONDITION
+%token<str> T_INTTYPE
+%token<str> T_RETURN
+%token<str> T_VOIDTYPE
+%token<str> T_PROGRAMCLASS
+%token<str> T_MAINFUNC
+%token<str> T_ID
+%token<str> T_ASSIGNOP
+%token<str> T_MINUSASSIGNOP
+%token<str> T_PLUSASSIGNOP
+%token<str> T_LOGICOP
+%token<str> T_EQUALITYOP
+%token<str> T_RELATIONOP
+%token<str> T_CONDITIONOP
+%token<str> T_MODULSOP
+%token<str> T_DIVISIONOP
+%token<str> T_MULTIPLEOP
+%token<str> T_MINUSOP
+%token<str> T_PLUSOP
+%token<str> T_LCB
+%token<str> T_RCB
+%token<str> T_LB
+%token<str> T_RB
+%token<str> T_LP
+%token<str> T_RP
+%token<str> T_SEMICOLON
+%token<str> T_COMMA
+%token<str> T_CHARCONST
+%token<str> T_STRINGCONST
+%token<str> T_HEXADECIMALCONST
+%token<number> T_DECIMALCONST
 
 
 %%
 //program
-program:  T_CLASS T_PROGRAMCLASS T_LCB field_decls method_decls T_RCB;
+program:  T_CLASS T_PROGRAMCLASS T_LCB decl_list T_RCB;
+decl_list:  | field_decl decl_list | 
+              T_VOIDTYPE method_namee T_LP args T_RP block method_decls |
+              type T_MAINFUNC T_LP args T_RP block  method_decls |
+              type id  T_LP args T_RP block ;
+
 
 //field decleration
-field_decls : | field_decl field_decls;
+//field_decls : | field_decl field_decls;
 field_decl : type variables T_SEMICOLON;
 variables : variable | variable T_COMMA variables;
 variable :  id | id T_LB int_literal T_RB;
