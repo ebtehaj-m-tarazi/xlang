@@ -1,15 +1,18 @@
 %{
+  #include "tree.h"
   #include <stdio.h>
   #include <iostream>
   using namespace std;
+
   #include "phase2.tab.h"
 %}
 
 char [ -~]{-}[\\"']|\\t|\\n|\\\\|\\'|[\\]["]
 
+%option noyywrap
+%option yylineno
+
 %%
-
-
 "//".*\n   /*ignore comments*/
 
 boolean  {yylval.str = strdup(yytext);           return T_BOOLEANTYPE;}
@@ -71,8 +74,8 @@ main     {yylval.str = strdup(yytext);           return T_MAINFUNC;}
 
 
 -?0x[a-fA-F0-9]+ {yylval.str = strdup(yytext);     return T_HEXADECIMALCONST; }
--?[0-9]+  { yylval.number = atoll(yytext); return T_DECIMALCONST;}
+-?[0-9]+  { yylval.str = strdup(yytext); return T_DECIMALCONST;}
 
 
-[0-9]("_"|[0-9a-zA-Z])+     {cout << "wrong id definition" ;   exit(-1);}
+[0-9]("_"|[0-9a-zA-Z])+     {cout << "wrong id definition in line" << yylineno << endl;   exit(-1);}
 %%    

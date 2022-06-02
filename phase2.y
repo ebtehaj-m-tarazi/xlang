@@ -1,4 +1,5 @@
 %{
+  #include "tree.h"
   #include <stdio.h>
   #include <iostream>
   using namespace std;
@@ -12,9 +13,11 @@
 	extern int yylineno;
 %}
 
+
 %union{
   char *str;
   long long int number;
+  tree nonTerminal;
 }
 
 %token<str> T_BOOLEANTYPE
@@ -55,7 +58,9 @@
 %token<str> T_CHARCONST
 %token<str> T_STRINGCONST
 %token<str> T_HEXADECIMALCONST
-%token<number> T_DECIMALCONST
+%token<str> T_DECIMALCONST
+
+%type<nonTerminal> block
 
 
 %%
@@ -84,7 +89,8 @@ arg : type id;
 
 
 //block
-block: T_LCB var_decls statements T_RCB;
+block: T_LCB var_decls statements T_RCB 
+{$$ = tree("<block>" , "<block>").addChild("T_LCB" , "{").addChild("T_RCB" , "}");};
 
 
 //variable declerations
@@ -196,11 +202,12 @@ string_literal: T_STRINGCONST;
 
 
 int main(int argc, char **argv){
-  FILE * fr = fopen(argv[1] , "r");
+  FILE * fr = fopen("input.xlang" , "r");
   yyin = fr;
   yyparse();
 }
 
 void yyerror(const char *s){
-  printf("%d: %s\n", yylineno , s);
+  printf("error in line %d: %s\n", yylineno , s);
+  exit(-1);
 }
