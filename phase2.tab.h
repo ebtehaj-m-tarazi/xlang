@@ -54,45 +54,45 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    T_BOOLEANTYPE = 258,           /* T_BOOLEANTYPE  */
-    T_BREAKSTMT = 259,             /* T_BREAKSTMT  */
-    T_CALLOUT = 260,               /* T_CALLOUT  */
-    T_CLASS = 261,                 /* T_CLASS  */
-    T_CONTINUESTMT = 262,          /* T_CONTINUESTMT  */
-    T_ELSECONDITION = 263,         /* T_ELSECONDITION  */
-    T_BOOLEANCONST = 264,          /* T_BOOLEANCONST  */
-    T_LOOP = 265,                  /* T_LOOP  */
-    T_IFCONDITION = 266,           /* T_IFCONDITION  */
-    T_INTTYPE = 267,               /* T_INTTYPE  */
-    T_RETURN = 268,                /* T_RETURN  */
-    T_VOIDTYPE = 269,              /* T_VOIDTYPE  */
-    T_PROGRAMCLASS = 270,          /* T_PROGRAMCLASS  */
-    T_MAINFUNC = 271,              /* T_MAINFUNC  */
-    T_ID = 272,                    /* T_ID  */
-    T_ASSIGNOP = 273,              /* T_ASSIGNOP  */
-    T_MINUSASSIGNOP = 274,         /* T_MINUSASSIGNOP  */
-    T_PLUSASSIGNOP = 275,          /* T_PLUSASSIGNOP  */
-    T_LOGICOP = 276,               /* T_LOGICOP  */
-    T_EQUALITYOP = 277,            /* T_EQUALITYOP  */
-    T_RELATIONOP = 278,            /* T_RELATIONOP  */
-    T_CONDITIONOP = 279,           /* T_CONDITIONOP  */
-    T_MODULSOP = 280,              /* T_MODULSOP  */
-    T_DIVISIONOP = 281,            /* T_DIVISIONOP  */
-    T_MULTIPLEOP = 282,            /* T_MULTIPLEOP  */
-    T_MINUSOP = 283,               /* T_MINUSOP  */
-    T_PLUSOP = 284,                /* T_PLUSOP  */
-    T_LCB = 285,                   /* T_LCB  */
-    T_RCB = 286,                   /* T_RCB  */
-    T_LB = 287,                    /* T_LB  */
-    T_RB = 288,                    /* T_RB  */
-    T_LP = 289,                    /* T_LP  */
-    T_RP = 290,                    /* T_RP  */
-    T_SEMICOLON = 291,             /* T_SEMICOLON  */
-    T_COMMA = 292,                 /* T_COMMA  */
-    T_CHARCONST = 293,             /* T_CHARCONST  */
-    T_STRINGCONST = 294,           /* T_STRINGCONST  */
-    T_HEXADECIMALCONST = 295,      /* T_HEXADECIMALCONST  */
-    T_DECIMALCONST = 296           /* T_DECIMALCONST  */
+    TOKEN_BOOLEANTYPE = 258,       /* TOKEN_BOOLEANTYPE  */
+    TOKEN_BREAKSTMT = 259,         /* TOKEN_BREAKSTMT  */
+    TOKEN_CALLOUT = 260,           /* TOKEN_CALLOUT  */
+    TOKEN_CLASS = 261,             /* TOKEN_CLASS  */
+    TOKEN_CONTINUESTMT = 262,      /* TOKEN_CONTINUESTMT  */
+    TOKEN_ELSECONDITION = 263,     /* TOKEN_ELSECONDITION  */
+    TOKEN_BOOLEANCONST = 264,      /* TOKEN_BOOLEANCONST  */
+    TOKEN_LOOP = 265,              /* TOKEN_LOOP  */
+    TOKEN_IFCONDITION = 266,       /* TOKEN_IFCONDITION  */
+    TOKEN_INTTYPE = 267,           /* TOKEN_INTTYPE  */
+    TOKEN_RETURN = 268,            /* TOKEN_RETURN  */
+    TOKEN_VOIDTYPE = 269,          /* TOKEN_VOIDTYPE  */
+    TOKEN_PROGRAMCLASS = 270,      /* TOKEN_PROGRAMCLASS  */
+    TOKEN_MAINFUNC = 271,          /* TOKEN_MAINFUNC  */
+    TOKEN_ID = 272,                /* TOKEN_ID  */
+    TOKEN_ASSIGNOP = 273,          /* TOKEN_ASSIGNOP  */
+    TOKEN_MINUSASSIGNOP = 274,     /* TOKEN_MINUSASSIGNOP  */
+    TOKEN_PLUSASSIGNOP = 275,      /* TOKEN_PLUSASSIGNOP  */
+    TOKEN_LOGICOP = 276,           /* TOKEN_LOGICOP  */
+    TOKEN_EQUALITYOP = 277,        /* TOKEN_EQUALITYOP  */
+    TOKEN_RELATIONOP = 278,        /* TOKEN_RELATIONOP  */
+    TOKEN_CONDITIONOP = 279,       /* TOKEN_CONDITIONOP  */
+    TOKEN_MODULSOP = 280,          /* TOKEN_MODULSOP  */
+    TOKEN_DIVISIONOP = 281,        /* TOKEN_DIVISIONOP  */
+    TOKEN_MULTIPLEOP = 282,        /* TOKEN_MULTIPLEOP  */
+    TOKEN_MINUSOP = 283,           /* TOKEN_MINUSOP  */
+    TOKEN_PLUSOP = 284,            /* TOKEN_PLUSOP  */
+    TOKEN_LCB = 285,               /* TOKEN_LCB  */
+    TOKEN_RCB = 286,               /* TOKEN_RCB  */
+    TOKEN_LB = 287,                /* TOKEN_LB  */
+    TOKEN_RB = 288,                /* TOKEN_RB  */
+    TOKEN_LP = 289,                /* TOKEN_LP  */
+    TOKEN_RP = 290,                /* TOKEN_RP  */
+    TOKEN_SEMICOLON = 291,         /* TOKEN_SEMICOLON  */
+    TOKEN_COMMA = 292,             /* TOKEN_COMMA  */
+    TOKEN_CHARCONST = 293,         /* TOKEN_CHARCONST  */
+    TOKEN_STRINGCONST = 294,       /* TOKEN_STRINGCONST  */
+    TOKEN_HEXADECIMALCONST = 295,  /* TOKEN_HEXADECIMALCONST  */
+    TOKEN_DECIMALCONST = 296       /* TOKEN_DECIMALCONST  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -101,12 +101,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 15 "phase2.y"
+#line 20 "phase2.y"
 
   char *str;
   long long int number;
+  tree* nonTerminal;
+  node* terminal;
 
-#line 110 "phase2.tab.h"
+#line 112 "phase2.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

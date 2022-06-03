@@ -9,9 +9,7 @@ class node {
   vector<node*> children;
 
 public:
-  node(string tokenName , string tokenValue );
-  node(node& other); 
-  ~node();
+  node(string tokenName , string tokenValue ); 
 
   vector<node *> getChildren();
   string getToken(int i);

@@ -162,8 +162,27 @@ extern FILE *yyin, *yyout;
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
     
-    #define YY_LESS_LINENO(n)
-    #define YY_LINENO_REWIND_TO(ptr)
+    /* Note: We specifically omit the test for yy_rule_can_match_eol because it requires
+     *       access to the local variable yy_act. Since yyless() is a macro, it would break
+     *       existing scanners that call yyless() from OUTSIDE yylex.
+     *       One obvious solution it to make yy_act a global. I tried that, and saw
+     *       a 5% performance hit in a non-yylineno scanner, because yy_act is
+     *       normally declared as a register variable-- so it is not worth it.
+     */
+    #define  YY_LESS_LINENO(n) \
+            do { \
+                int yyl;\
+                for ( yyl = n; yyl < yyleng; ++yyl )\
+                    if ( yytext[yyl] == '\n' )\
+                        --yylineno;\
+            }while(0)
+    #define YY_LINENO_REWIND_TO(dst) \
+            do {\
+                const char *p;\
+                for ( p = yy_cp-1; p >= (dst); --p)\
+                    if ( *p == '\n' )\
+                        --yylineno;\
+            }while(0)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -322,6 +341,9 @@ void yyfree ( void *  );
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
 /* Begin user sect3 */
+
+#define yywrap() (/*CONSTCOND*/1)
+#define YY_SKIP_YYWRAP
 typedef flex_uint8_t YY_CHAR;
 
 FILE *yyin = NULL, *yyout = NULL;
@@ -518,6 +540,13 @@ static const flex_int16_t yy_chk[233] =
       127,  127
     } ;
 
+/* Table of booleans, true if rule could match eol. */
+static const flex_int32_t yy_rule_can_match_eol[52] =
+    {   0,
+1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,     };
+
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
 
@@ -534,12 +563,14 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "phase2.l"
 #line 2 "phase2.l"
+  #include "tree.h"
   #include <stdio.h>
   #include <iostream>
   using namespace std;
+
   #include "phase2.tab.h"
-#line 542 "lex.yy.c"
-#line 543 "lex.yy.c"
+#line 573 "lex.yy.c"
+#line 574 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -756,11 +787,9 @@ YY_DECL
 		}
 
 	{
-#line 10 "phase2.l"
+#line 15 "phase2.l"
 
-
-
-#line 764 "lex.yy.c"
+#line 793 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -806,6 +835,16 @@ yy_find_action:
 
 		YY_DO_BEFORE_ACTION;
 
+		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
+			{
+			int yyl;
+			for ( yyl = 0; yyl < yyleng; ++yyl )
+				if ( yytext[yyl] == '\n' )
+					
+    yylineno++;
+;
+			}
+
 do_action:	/* This label is used only to access EOF actions. */
 
 		switch ( yy_act )
@@ -820,261 +859,261 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 13 "phase2.l"
+#line 16 "phase2.l"
 /*ignore comments*/
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 15 "phase2.l"
-{yylval.str = strdup(yytext);           return T_BOOLEANTYPE;}
+#line 18 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_BOOLEANTYPE;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 16 "phase2.l"
-{yylval.str = strdup(yytext);           return T_BREAKSTMT;}
+#line 19 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_BREAKSTMT;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 17 "phase2.l"
-{yylval.str = strdup(yytext);           return T_CALLOUT;}
+#line 20 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_CALLOUT;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 18 "phase2.l"
-{yylval.str = strdup(yytext);           return T_CLASS;}
+#line 21 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_CLASS;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 19 "phase2.l"
-{yylval.str = strdup(yytext);           return T_CONTINUESTMT;}
+#line 22 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_CONTINUESTMT;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 20 "phase2.l"
-{yylval.str = strdup(yytext);           return T_ELSECONDITION;}
+#line 23 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_ELSECONDITION;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 21 "phase2.l"
-{yylval.str = strdup(yytext);           return T_BOOLEANCONST;}
+#line 24 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_BOOLEANCONST;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 22 "phase2.l"
-{yylval.str = strdup(yytext);           return T_LOOP;}
+#line 25 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_LOOP;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 23 "phase2.l"
-{yylval.str = strdup(yytext);           return T_IFCONDITION;}
+#line 26 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_IFCONDITION;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 24 "phase2.l"
-{yylval.str = strdup(yytext);           return T_INTTYPE;}
+#line 27 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_INTTYPE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 25 "phase2.l"
-{yylval.str = strdup(yytext);           return T_RETURN;}
+#line 28 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_RETURN;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 26 "phase2.l"
-{yylval.str = strdup(yytext);           return T_BOOLEANCONST;}
+#line 29 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_BOOLEANCONST;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 27 "phase2.l"
-{yylval.str = strdup(yytext);           return T_VOIDTYPE;}
+#line 30 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_VOIDTYPE;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 28 "phase2.l"
-{yylval.str = strdup(yytext);           return T_PROGRAMCLASS;}
+#line 31 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_PROGRAMCLASS;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 29 "phase2.l"
-{yylval.str = strdup(yytext);           return T_MAINFUNC;}
+#line 32 "phase2.l"
+{yylval.str = strdup(yytext);           return TOKEN_MAINFUNC;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 32 "phase2.l"
-{yylval.str = strdup(yytext);     return T_ID;}
+#line 35 "phase2.l"
+{yylval.str = strdup(yytext);     return TOKEN_ID;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 35 "phase2.l"
-{yylval.str = strdup(yytext);        return T_MINUSASSIGNOP;}
+#line 38 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_MINUSASSIGNOP;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 36 "phase2.l"
-{yylval.str = strdup(yytext);        return T_PLUSASSIGNOP;}
+#line 39 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_PLUSASSIGNOP;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 37 "phase2.l"
-{yylval.str = strdup(yytext);        return T_EQUALITYOP;}
+#line 40 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_EQUALITYOP;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 38 "phase2.l"
-{yylval.str = strdup(yytext);        return T_RELATIONOP;}
+#line 41 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_RELATIONOP;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 39 "phase2.l"
-{yylval.str = strdup(yytext);        return T_RELATIONOP;}
+#line 42 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_RELATIONOP;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 40 "phase2.l"
-{yylval.str = strdup(yytext);        return T_CONDITIONOP;}
+#line 43 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_CONDITIONOP;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 41 "phase2.l"
-{yylval.str = strdup(yytext);        return T_CONDITIONOP;}
+#line 44 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_CONDITIONOP;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 42 "phase2.l"
-{yylval.str = strdup(yytext);        return T_EQUALITYOP;}
+#line 45 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_EQUALITYOP;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 43 "phase2.l"
-{yylval.str = strdup(yytext);        return T_ASSIGNOP;}
+#line 46 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_ASSIGNOP;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 44 "phase2.l"
-{yylval.str = strdup(yytext);        return T_LOGICOP;}
+#line 47 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_LOGICOP;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 45 "phase2.l"
-{yylval.str = strdup(yytext);        return T_RELATIONOP;}
+#line 48 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_RELATIONOP;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 46 "phase2.l"
-{yylval.str = strdup(yytext);        return T_RELATIONOP;}
+#line 49 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_RELATIONOP;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 47 "phase2.l"
-{yylval.str = strdup(yytext);        return T_MODULSOP;}
+#line 50 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_MODULSOP;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 48 "phase2.l"
-{yylval.str = strdup(yytext);        return T_DIVISIONOP;}
+#line 51 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_DIVISIONOP;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 49 "phase2.l"
-{yylval.str = strdup(yytext);        return T_MULTIPLEOP;}
+#line 52 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_MULTIPLEOP;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 50 "phase2.l"
-{yylval.str = strdup(yytext);        return T_MINUSOP;}
+#line 53 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_MINUSOP;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 51 "phase2.l"
-{yylval.str = strdup(yytext);        return T_PLUSOP;}
+#line 54 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_PLUSOP;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 54 "phase2.l"
-{yylval.str = strdup(yytext);        return T_LCB;}
+#line 57 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_LCB;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 55 "phase2.l"
-{yylval.str = strdup(yytext);        return T_RCB;}
+#line 58 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_RCB;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 56 "phase2.l"
-{yylval.str = strdup(yytext);        return T_LB;}
+#line 59 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_LB;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 57 "phase2.l"
-{yylval.str = strdup(yytext);        return T_RB;}
+#line 60 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_RB;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 58 "phase2.l"
-{yylval.str = strdup(yytext);        return T_LP;}
+#line 61 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_LP;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 59 "phase2.l"
-{yylval.str = strdup(yytext);        return T_RP;}
+#line 62 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_RP;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 60 "phase2.l"
-{yylval.str = strdup(yytext);        return T_SEMICOLON;}
+#line 63 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_SEMICOLON;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 61 "phase2.l"
-{yylval.str = strdup(yytext);        return T_COMMA;}
+#line 64 "phase2.l"
+{yylval.str = strdup(yytext);        return TOKEN_COMMA;}
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 65 "phase2.l"
+#line 68 "phase2.l"
 /*ignore whitespaces*/
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 66 "phase2.l"
+#line 69 "phase2.l"
 /*ignore whitespaces*/
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 67 "phase2.l"
+#line 70 "phase2.l"
 /*ignore whitespaces*/
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 69 "phase2.l"
-{yylval.str = strdup(yytext);   return T_CHARCONST;}
+#line 72 "phase2.l"
+{yylval.str = strdup(yytext);   return TOKEN_CHARCONST;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 70 "phase2.l"
-{yylval.str = strdup(yytext);   return T_STRINGCONST;}
+#line 73 "phase2.l"
+{yylval.str = strdup(yytext);   return TOKEN_STRINGCONST;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 73 "phase2.l"
-{yylval.str = strdup(yytext);     return T_HEXADECIMALCONST; }
+#line 76 "phase2.l"
+{yylval.str = strdup(yytext);     return TOKEN_HEXADECIMALCONST; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 74 "phase2.l"
-{ yylval.number = atoll(yytext); return T_DECIMALCONST;}
+#line 77 "phase2.l"
+{ yylval.str = strdup(yytext); return TOKEN_DECIMALCONST;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 77 "phase2.l"
-{cout << "wrong id definition" ;   exit(-1);}
+#line 80 "phase2.l"
+{cout << "wrong id definition in line" << yylineno << endl;   exit(-1);}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 78 "phase2.l"
+#line 81 "phase2.l"
 ECHO;
 	YY_BREAK
-#line 1078 "lex.yy.c"
+#line 1117 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1442,6 +1481,10 @@ static int yy_get_next_buffer (void)
 
 	*--yy_cp = (char) c;
 
+    if ( c == '\n' ){
+        --yylineno;
+    }
+
 	(yytext_ptr) = yy_bp;
 	(yy_hold_char) = *yy_cp;
 	(yy_c_buf_p) = yy_cp;
@@ -1518,6 +1561,11 @@ static int yy_get_next_buffer (void)
 	c = *(unsigned char *) (yy_c_buf_p);	/* cast for 8-bit char's */
 	*(yy_c_buf_p) = '\0';	/* preserve yytext */
 	(yy_hold_char) = *++(yy_c_buf_p);
+
+	if ( c == '\n' )
+		
+    yylineno++;
+;
 
 	return c;
 }
@@ -1985,6 +2033,9 @@ static int yy_init_globals (void)
      * This function is called from yylex_destroy(), so don't allocate here.
      */
 
+    /* We do not touch yylineno unless the option is enabled. */
+    yylineno =  1;
+    
     (yy_buffer_stack) = NULL;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
@@ -2079,6 +2130,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 78 "phase2.l"
+#line 81 "phase2.l"
 
 

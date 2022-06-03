@@ -6,15 +6,6 @@ node::node(string tokenName , string tokenValue ){
   token[1] = tokenValue;
 }
 
-node::node(node& other){
-  token[0] = other.getToken(0);
-  token[1] = other.getToken(1);
-} 
-
-node::~node(){
-  deletChildren();
-}
-
 vector<node*> node::getChildren(){
   return children;
 }
