@@ -3,45 +3,25 @@ using namespace std;
 #include <vector>
 
 
-class node {
+class tree {
 
   string token[2];
-  vector<node*> children;
+  vector<tree*> children;
 
 public:
-  node(string tokenName , string tokenValue );
-  node(node& other); 
-  ~node();
+  tree(string tokenName , string tokenValue );
+  tree(tree& other); 
+  ~tree();
 
-  vector<node *> getChildren();
+  vector<tree *> getChildren();
   string getToken(int i);
 
-  node* addChild(string _tokenName , string _tokenValue);
-  node* addChild(node *child);
-  node* addOthersChild(node* other);
+  tree* addChild(string _tokenName , string _tokenValue);
+  tree* addChild(tree *child);
+  tree* addOthersChild(tree* other);
 
-  void deleteChild(node *_root);
+  void deleteChild(tree *_root);
   void deletChildren();
 };
 
-
-class tree { 
-
-  node *root;
-  
-  void Delete(node* _root);
-
-public:
-  tree(string _tokenName , string _tokenValue);
-  tree(tree& other);
-  ~tree();
-
-  node* getRoot();
-  vector<node*> getChildren();
-
-  tree* addChild(string _tokenName , string _tokenValue);
-  tree* addChild(node* child);
-  tree* addOthersChild(node* other);
-};
-
-void preorderTraversal(int input , node* _root = NULL);
+void preorderTraversal(int input , tree* _root = NULL);

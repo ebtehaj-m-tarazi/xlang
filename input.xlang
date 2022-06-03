@@ -1,4 +1,11 @@
 class Program {
-  int globalVar;
-  void main(){ }
+  int add(int a, int b){
+    return a + b;
+  }
+  void main(){
+    int a , b;
+    a = 3;
+    b = 3;
+    add(a);
+  }
 }

@@ -83,7 +83,7 @@
 	extern int yylineno;
 
   int input;
-  node *root;
+  tree *root;
 
 #line 89 "phase2.tab.c"
 
@@ -162,42 +162,43 @@ enum yysymbol_kind_t
   YYSYMBOL_variables = 46,                 /* variables  */
   YYSYMBOL_variable = 47,                  /* variable  */
   YYSYMBOL_method_decls = 48,              /* method_decls  */
-  YYSYMBOL_method_decl = 49,               /* method_decl  */
-  YYSYMBOL_method_type = 50,               /* method_type  */
-  YYSYMBOL_method_namee = 51,              /* method_namee  */
-  YYSYMBOL_args = 52,                      /* args  */
-  YYSYMBOL_arg = 53,                       /* arg  */
-  YYSYMBOL_block = 54,                     /* block  */
-  YYSYMBOL_var_decls = 55,                 /* var_decls  */
-  YYSYMBOL_var_decl = 56,                  /* var_decl  */
-  YYSYMBOL_ids = 57,                       /* ids  */
-  YYSYMBOL_type = 58,                      /* type  */
-  YYSYMBOL_statements = 59,                /* statements  */
-  YYSYMBOL_statement = 60,                 /* statement  */
-  YYSYMBOL_nexpr = 61,                     /* nexpr  */
-  YYSYMBOL_else_block = 62,                /* else_block  */
-  YYSYMBOL_assign_op = 63,                 /* assign_op  */
-  YYSYMBOL_method_call = 64,               /* method_call  */
-  YYSYMBOL_method_name = 65,               /* method_name  */
-  YYSYMBOL_location = 66,                  /* location  */
-  YYSYMBOL_exprs = 67,                     /* exprs  */
-  YYSYMBOL_expr = 68,                      /* expr  */
-  YYSYMBOL_expr1 = 69,                     /* expr1  */
-  YYSYMBOL_callouTOKEN_args = 70,          /* callouTOKEN_args  */
-  YYSYMBOL_callouTOKEN_arg = 71,           /* callouTOKEN_arg  */
-  YYSYMBOL_bin_op = 72,                    /* bin_op  */
-  YYSYMBOL_arith_op = 73,                  /* arith_op  */
-  YYSYMBOL_rel_op = 74,                    /* rel_op  */
-  YYSYMBOL_eq_op = 75,                     /* eq_op  */
-  YYSYMBOL_cond_op = 76,                   /* cond_op  */
-  YYSYMBOL_literal = 77,                   /* literal  */
-  YYSYMBOL_id = 78,                        /* id  */
-  YYSYMBOL_inTOKEN_literal = 79,           /* inTOKEN_literal  */
-  YYSYMBOL_deciamla_literal = 80,          /* deciamla_literal  */
-  YYSYMBOL_hex_literal = 81,               /* hex_literal  */
-  YYSYMBOL_bool_literal = 82,              /* bool_literal  */
-  YYSYMBOL_char_literal = 83,              /* char_literal  */
-  YYSYMBOL_string_literal = 84             /* string_literal  */
+  YYSYMBOL_method_decls1 = 49,             /* method_decls1  */
+  YYSYMBOL_method_decl = 50,               /* method_decl  */
+  YYSYMBOL_main_decl = 51,                 /* main_decl  */
+  YYSYMBOL_method_type = 52,               /* method_type  */
+  YYSYMBOL_args = 53,                      /* args  */
+  YYSYMBOL_arg = 54,                       /* arg  */
+  YYSYMBOL_block = 55,                     /* block  */
+  YYSYMBOL_var_decls = 56,                 /* var_decls  */
+  YYSYMBOL_var_decl = 57,                  /* var_decl  */
+  YYSYMBOL_ids = 58,                       /* ids  */
+  YYSYMBOL_type = 59,                      /* type  */
+  YYSYMBOL_statements = 60,                /* statements  */
+  YYSYMBOL_statement = 61,                 /* statement  */
+  YYSYMBOL_nexpr = 62,                     /* nexpr  */
+  YYSYMBOL_else_block = 63,                /* else_block  */
+  YYSYMBOL_assign_op = 64,                 /* assign_op  */
+  YYSYMBOL_method_call = 65,               /* method_call  */
+  YYSYMBOL_method_name = 66,               /* method_name  */
+  YYSYMBOL_location = 67,                  /* location  */
+  YYSYMBOL_exprs = 68,                     /* exprs  */
+  YYSYMBOL_expr = 69,                      /* expr  */
+  YYSYMBOL_expr1 = 70,                     /* expr1  */
+  YYSYMBOL_callout_args = 71,              /* callout_args  */
+  YYSYMBOL_callout_arg = 72,               /* callout_arg  */
+  YYSYMBOL_bin_op = 73,                    /* bin_op  */
+  YYSYMBOL_arith_op = 74,                  /* arith_op  */
+  YYSYMBOL_rel_op = 75,                    /* rel_op  */
+  YYSYMBOL_eq_op = 76,                     /* eq_op  */
+  YYSYMBOL_cond_op = 77,                   /* cond_op  */
+  YYSYMBOL_literal = 78,                   /* literal  */
+  YYSYMBOL_id = 79,                        /* id  */
+  YYSYMBOL_int_literal = 80,               /* int_literal  */
+  YYSYMBOL_deciamla_literal = 81,          /* deciamla_literal  */
+  YYSYMBOL_hex_literal = 82,               /* hex_literal  */
+  YYSYMBOL_bool_literal = 83,              /* bool_literal  */
+  YYSYMBOL_char_literal = 84,              /* char_literal  */
+  YYSYMBOL_string_literal = 85             /* string_literal  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -519,16 +520,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   212
+#define YYLAST   217
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  42
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  43
+#define YYNNTS  44
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  90
+#define YYNRULES  93
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  164
+#define YYNSTATES  167
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   296
@@ -581,16 +582,16 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   118,   118,   122,   123,   125,   131,   137,   148,   153,
-     156,   161,   164,   172,   173,   178,   183,   185,   189,   190,
-     193,   194,   198,   202,   207,   208,   211,   214,   215,   221,
-     222,   227,   228,   231,   234,   236,   239,   242,   244,   246,
-     248,   251,   252,   254,   255,   260,   261,   262,   268,   271,
-     274,   281,   286,   287,   291,   292,   295,   296,   299,   300,
-     301,   302,   303,   304,   309,   310,   314,   315,   321,   322,
-     323,   324,   329,   330,   331,   332,   333,   339,   344,   349,
-     354,   355,   356,   361,   365,   366,   370,   374,   378,   382,
-     386
+       0,   118,   118,   123,   125,   131,   137,   148,   153,   156,
+     161,   164,   172,   173,   177,   179,   183,   187,   191,   192,
+     194,   195,   196,   200,   204,   209,   210,   213,   216,   217,
+     223,   224,   229,   230,   233,   236,   238,   241,   244,   246,
+     248,   250,   253,   254,   256,   257,   262,   263,   264,   270,
+     273,   276,   283,   288,   289,   293,   294,   295,   298,   299,
+     302,   303,   304,   305,   306,   307,   312,   313,   314,   318,
+     319,   325,   326,   327,   328,   333,   334,   335,   336,   337,
+     343,   348,   353,   358,   359,   360,   365,   369,   370,   374,
+     378,   382,   386,   390
 };
 #endif
 
@@ -618,12 +619,12 @@ static const char *const yytname[] =
   "TOKEN_RB", "TOKEN_LP", "TOKEN_RP", "TOKEN_SEMICOLON", "TOKEN_COMMA",
   "TOKEN_CHARCONST", "TOKEN_STRINGCONST", "TOKEN_HEXADECIMALCONST",
   "TOKEN_DECIMALCONST", "$accept", "program", "decl_list", "field_decl",
-  "variables", "variable", "method_decls", "method_decl", "method_type",
-  "method_namee", "args", "arg", "block", "var_decls", "var_decl", "ids",
-  "type", "statements", "statement", "nexpr", "else_block", "assign_op",
-  "method_call", "method_name", "location", "exprs", "expr", "expr1",
-  "callouTOKEN_args", "callouTOKEN_arg", "bin_op", "arith_op", "rel_op",
-  "eq_op", "cond_op", "literal", "id", "inTOKEN_literal",
+  "variables", "variable", "method_decls", "method_decls1", "method_decl",
+  "main_decl", "method_type", "args", "arg", "block", "var_decls",
+  "var_decl", "ids", "type", "statements", "statement", "nexpr",
+  "else_block", "assign_op", "method_call", "method_name", "location",
+  "exprs", "expr", "expr1", "callout_args", "callout_arg", "bin_op",
+  "arith_op", "rel_op", "eq_op", "cond_op", "literal", "id", "int_literal",
   "deciamla_literal", "hex_literal", "bool_literal", "char_literal",
   "string_literal", YY_NULLPTR
 };
@@ -648,12 +649,12 @@ static const yytype_int16 yytoknum[] =
 };
 #endif
 
-#define YYPACT_NINF (-60)
+#define YYPACT_NINF (-84)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
 
-#define YYTABLE_NINF (-52)
+#define YYTABLE_NINF (-53)
 
 #define yytable_value_is_error(Yyn) \
   0
@@ -662,23 +663,23 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      45,    46,    63,    40,   -60,    10,   -60,   -60,    15,    51,
-      10,    49,   -60,   -60,    37,   -60,   -60,   -60,    50,    54,
-      60,   -25,    56,    56,   -60,    69,    34,    56,    52,    73,
-      69,    71,   -60,    80,   -60,   -60,    58,   -60,   -60,    78,
-      86,    56,   -60,    86,   -60,    86,    56,    30,   -60,    30,
-      30,   104,    56,    69,   -60,   -60,    30,    15,   -60,   -60,
-     -60,    84,    96,    95,    69,    98,    55,   -60,   102,   104,
-      99,   112,    59,   -15,   -60,   111,   113,   -60,   114,   -60,
-      97,   -60,   133,    55,   -60,    55,    55,    55,   -60,   125,
-     -60,   -60,   180,   -60,   -60,   -60,   -60,   -60,   -60,   -60,
-     -60,    55,   -60,   -60,   -60,    55,    55,   -60,    69,    56,
-     -60,     8,    55,   131,   -60,   -60,   145,   -60,   -60,   -60,
-     -60,   -60,   -60,   -60,   -60,   -60,    55,   -60,   -60,   -60,
-     -60,   127,    12,   116,   159,   -60,   128,   -60,    64,   100,
-      86,   -60,   -60,   -60,    55,   -60,   -60,    86,   180,   129,
-     138,   -60,    55,   141,   -60,   -60,   -60,    64,   171,    86,
-     -60,   -60,   -60,   -60
+      -2,    23,    25,   -11,   -84,    74,   -84,   -84,    19,    16,
+      74,    95,    38,    27,   -84,    36,   -84,   -84,   -84,   -84,
+      95,    38,   -84,    45,    47,     9,    57,    10,   -84,    63,
+     -84,    38,    53,    10,    71,    69,    68,    38,    10,   -84,
+      80,   -84,   -84,    93,   -84,   -84,    78,    10,   -84,    71,
+      10,   -84,    90,   -84,    71,    55,    10,    38,    96,   -84,
+      71,    96,   102,   105,   106,    38,   107,    62,   -84,   109,
+      55,   118,   110,   104,    48,   -84,   119,   120,   127,   -84,
+      96,    95,   -84,   -84,   -84,   117,   -84,   140,    62,   -84,
+      62,    62,    62,   -84,   123,   -84,   -84,   188,   -84,   -84,
+     -84,   -84,   -84,   -84,   -84,   -84,    62,   -84,   -84,   -84,
+      62,    62,   -84,    38,   -84,   -84,   -84,    52,    62,   139,
+     -84,   -84,   153,   -84,   -84,   -84,   -84,   -84,   -84,   -84,
+     -84,   -84,    62,   -84,   -84,   -84,   -84,   134,    92,   124,
+     167,   -84,   -84,    35,   108,    71,   -84,   -84,   -84,    62,
+     -84,   -84,   188,   135,   136,   -84,    62,   163,   -84,   -84,
+      35,   179,    71,   -84,   -84,   -84,   -84
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -686,43 +687,43 @@ static const yytype_int16 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     0,     1,     3,    30,    29,     0,     0,
-       3,     0,    18,    83,     0,    19,     2,     4,     0,     0,
-       9,    11,    20,    20,     8,     0,     0,    20,     0,     0,
-       0,     0,    10,    11,    87,    86,     0,    84,    85,     0,
-       0,    20,    22,     0,    12,     0,    24,    13,    21,    13,
-      13,    31,    24,     0,    17,     5,    13,     0,    16,     6,
-       7,     0,     0,     0,     0,     0,    41,    40,     0,    31,
-       0,     0,     0,    52,    25,     0,    27,    14,     0,    38,
-       0,    39,     0,     0,    88,     0,     0,     0,    89,     0,
-      59,    58,    42,    57,    60,    80,    82,    81,    23,    32,
-      34,    54,    45,    46,    47,     0,     0,    26,     0,    20,
-      90,     0,     0,     0,    62,    61,     0,    37,    78,    77,
-      79,    72,    73,    74,    75,    76,     0,    68,    69,    70,
-      71,     0,     0,     0,     0,    28,     0,    50,    64,     0,
-       0,    63,    56,    48,    54,    33,    53,     0,    66,     0,
-       0,    67,     0,    43,    55,    15,    49,    64,     0,     0,
-      35,    65,    36,    44
+       0,     0,     0,     0,     1,     0,    31,    30,     0,     0,
+       0,    12,     0,     0,    86,     0,     2,     3,    19,     6,
+      12,     0,    18,     0,     8,    10,     0,    20,    13,     0,
+       7,     0,     0,    20,     0,     0,    21,     0,    20,     9,
+      10,    90,    89,     0,    87,    88,     0,    25,    17,     0,
+      20,    23,     0,    11,     0,    32,    25,     0,     0,    22,
+       0,     0,     0,     0,     0,     0,     0,    42,    41,     0,
+      32,     0,     0,     0,    53,    26,     0,    28,    19,     4,
+       0,    12,    16,     5,    39,     0,    40,     0,     0,    91,
+       0,     0,     0,    92,     0,    61,    60,    43,    59,    62,
+      83,    85,    84,    24,    33,    35,    55,    46,    47,    48,
+       0,     0,    27,     0,    14,    15,    93,     0,     0,     0,
+      64,    63,     0,    38,    81,    80,    82,    75,    76,    77,
+      78,    79,     0,    71,    72,    73,    74,     0,    56,     0,
+       0,    29,    51,    66,     0,     0,    65,    58,    49,    55,
+      34,    54,    69,     0,    67,    70,     0,    44,    57,    50,
+      66,     0,     0,    36,    68,    37,    45
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-     -60,   -60,   155,   -60,   151,   -60,   -35,   -60,   -60,   120,
-     -21,   -60,   -40,   126,   -60,    81,     6,   110,   -60,   -60,
-     -60,   -60,   -41,   -60,   -39,    47,   -58,   -59,    33,   -60,
-     -60,   -60,   -60,   -60,   -60,   -60,    -7,   184,   -60,   -60,
-     -60,   -60,   132
+     -84,   -84,   162,   -84,   152,   -84,   -17,   -51,   -49,    11,
+     -84,     4,   -84,   -34,   128,   -84,    72,     1,   116,   -84,
+     -84,   -84,   -84,   -38,   -84,   -37,    49,   -65,   -83,    37,
+     -84,   -84,   -84,   -84,   -84,   -84,   -84,    -7,   155,   -84,
+     -84,   -84,   -84,   114
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_uint8 yydefgoto[] =
 {
-       0,     2,     9,    10,    19,    20,    55,    56,    57,    14,
-      28,    29,    67,    51,    52,    75,    30,    68,    69,    89,
-     160,   105,    90,    71,    91,   131,   132,    93,   149,   150,
-     126,   127,   128,   129,   130,    94,    73,    95,    37,    38,
-      96,    97,   151
+       0,     2,     9,    10,    23,    24,    19,    79,    20,    81,
+      21,    35,    36,    68,    55,    56,    76,    22,    69,    70,
+      94,   163,   110,    95,    72,    96,   137,   138,    98,   153,
+     154,   132,   133,   134,   135,   136,    99,    74,   100,    44,
+      45,   101,   102,   155
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -730,54 +731,54 @@ static const yytype_uint8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-      47,    15,    31,    49,    21,    50,    39,    26,    92,    27,
-      70,    11,    72,     6,    59,    60,    11,   106,    33,   -51,
-      48,    77,     7,    42,     8,   113,   114,   115,    70,   116,
-      72,    12,    13,     6,   118,   119,   120,   121,   122,   123,
-     124,   125,     7,   137,    54,   138,    76,   133,   134,   144,
-      15,     1,    53,    58,   139,    58,    58,    82,    53,     6,
-      62,     3,    58,     4,    84,    18,    13,   142,     7,    62,
-       5,    22,    13,    84,    34,    35,    85,   102,   103,   104,
-     148,    13,    16,    86,    23,    85,    13,    40,   136,    87,
-      24,    44,    86,    88,   158,    34,    35,    25,    87,   148,
-     153,    76,    88,   110,    34,    35,    43,   155,    61,    62,
-      41,    63,    26,    45,    64,    65,    46,    66,   162,   163,
-      79,    13,   118,   119,   120,   121,   122,   123,   124,   125,
-      80,    81,    83,    98,    46,   100,   110,   152,   118,   119,
-     120,   121,   122,   123,   124,   125,   101,   107,   109,   159,
-     108,   112,   145,   118,   119,   120,   121,   122,   123,   124,
-     125,   117,   143,   147,   156,    17,   140,   118,   119,   120,
-     121,   122,   123,   124,   125,   157,    32,    78,    74,    99,
-     141,   118,   119,   120,   121,   122,   123,   124,   125,   135,
-     161,   154,   146,   118,   119,   120,   121,   122,   123,   124,
-     125,    46,   118,   119,   120,   121,   122,   123,   124,   125,
-      36,     0,   111
+      48,    15,    97,    28,     1,    25,    12,   120,   121,    80,
+      83,    12,    80,     6,    29,    58,    11,    71,    73,     5,
+      61,    11,     7,   119,    40,     4,    82,   122,    37,   114,
+      51,    80,    71,    73,    37,    13,    14,    46,     3,    37,
+      63,    32,    52,    33,    89,   139,   140,    16,    57,   147,
+      77,    37,    14,   144,    59,    14,    90,    57,    87,    62,
+      63,    26,    64,    91,   115,    65,    66,    63,    67,    92,
+      27,    89,    14,    93,   116,    41,    42,     6,   152,    14,
+     111,    30,   -52,    90,    31,    47,     7,   142,     8,   143,
+      91,   161,    34,    41,    42,   152,    92,    38,     6,     6,
+      93,    47,    41,    42,    49,    50,    77,     7,     7,    18,
+      78,   157,    32,    54,   124,   125,   126,   127,   128,   129,
+     130,   131,   107,   108,   109,    60,    53,   165,   166,   149,
+     124,   125,   126,   127,   128,   129,   130,   131,    84,    85,
+     103,    88,    86,    13,   106,   156,   124,   125,   126,   127,
+     128,   129,   130,   131,   105,   112,   116,   113,   118,   123,
+     150,   124,   125,   126,   127,   128,   129,   130,   131,   148,
+     159,   162,    17,   160,   145,   124,   125,   126,   127,   128,
+     129,   130,   131,    39,    75,   141,   104,    43,   146,   124,
+     125,   126,   127,   128,   129,   130,   131,   164,   158,   117,
+     151,   124,   125,   126,   127,   128,   129,   130,   131,    47,
+     124,   125,   126,   127,   128,   129,   130,   131
 };
 
-static const yytype_int16 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-      40,     8,    23,    43,    11,    45,    27,    32,    66,    34,
-      51,     5,    51,     3,    49,    50,    10,    32,    25,    34,
-      41,    56,    12,    30,    14,    83,    85,    86,    69,    87,
-      69,    16,    17,     3,    22,    23,    24,    25,    26,    27,
-      28,    29,    12,    35,    14,    37,    53,   105,   106,    37,
-      57,     6,    46,    47,   112,    49,    50,    64,    52,     3,
-       5,    15,    56,     0,     9,    16,    17,   126,    12,     5,
-      30,    34,    17,     9,    40,    41,    21,    18,    19,    20,
-     138,    17,    31,    28,    34,    21,    17,    35,   109,    34,
-      36,    33,    28,    38,   152,    40,    41,    37,    34,   157,
-     140,   108,    38,    39,    40,    41,    35,   147,     4,     5,
-      37,     7,    32,    35,    10,    11,    30,    13,   158,   159,
-      36,    17,    22,    23,    24,    25,    26,    27,    28,    29,
-      34,    36,    34,    31,    30,    36,    39,    37,    22,    23,
-      24,    25,    26,    27,    28,    29,    34,    36,    34,     8,
-      37,    18,    36,    22,    23,    24,    25,    26,    27,    28,
-      29,    36,    35,    35,    35,    10,    35,    22,    23,    24,
-      25,    26,    27,    28,    29,    37,    25,    57,    52,    69,
-      35,    22,    23,    24,    25,    26,    27,    28,    29,   108,
-     157,   144,    33,    22,    23,    24,    25,    26,    27,    28,
-      29,    30,    22,    23,    24,    25,    26,    27,    28,    29,
-      26,    -1,    80
+      34,     8,    67,    20,     6,    12,     5,    90,    91,    58,
+      61,    10,    61,     3,    21,    49,     5,    55,    55,    30,
+      54,    10,    12,    88,    31,     0,    60,    92,    27,    80,
+      37,    80,    70,    70,    33,    16,    17,    33,    15,    38,
+       5,    32,    38,    34,     9,   110,   111,    31,    47,   132,
+      57,    50,    17,   118,    50,    17,    21,    56,    65,     4,
+       5,    34,     7,    28,    81,    10,    11,     5,    13,    34,
+      34,     9,    17,    38,    39,    40,    41,     3,   143,    17,
+      32,    36,    34,    21,    37,    30,    12,    35,    14,    37,
+      28,   156,    35,    40,    41,   160,    34,    34,     3,     3,
+      38,    30,    40,    41,    35,    37,   113,    12,    12,    14,
+      14,   145,    32,    35,    22,    23,    24,    25,    26,    27,
+      28,    29,    18,    19,    20,    35,    33,   161,   162,    37,
+      22,    23,    24,    25,    26,    27,    28,    29,    36,    34,
+      31,    34,    36,    16,    34,    37,    22,    23,    24,    25,
+      26,    27,    28,    29,    36,    36,    39,    37,    18,    36,
+      36,    22,    23,    24,    25,    26,    27,    28,    29,    35,
+      35,     8,    10,    37,    35,    22,    23,    24,    25,    26,
+      27,    28,    29,    31,    56,   113,    70,    32,    35,    22,
+      23,    24,    25,    26,    27,    28,    29,   160,   149,    85,
+      33,    22,    23,    24,    25,    26,    27,    28,    29,    30,
+      22,    23,    24,    25,    26,    27,    28,    29
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -785,52 +786,52 @@ static const yytype_int16 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     6,    43,    15,     0,    30,     3,    12,    14,    44,
-      45,    58,    16,    17,    51,    78,    31,    44,    16,    46,
-      47,    78,    34,    34,    36,    37,    32,    34,    52,    53,
-      58,    52,    46,    78,    40,    41,    79,    80,    81,    52,
-      35,    37,    78,    35,    33,    35,    30,    54,    52,    54,
-      54,    55,    56,    58,    14,    48,    49,    50,    58,    48,
-      48,     4,     5,     7,    10,    11,    13,    54,    59,    60,
-      64,    65,    66,    78,    55,    57,    78,    48,    51,    36,
-      34,    36,    78,    34,     9,    21,    28,    34,    38,    61,
-      64,    66,    68,    69,    77,    79,    82,    83,    31,    59,
-      36,    34,    18,    19,    20,    63,    32,    36,    37,    34,
-      39,    84,    18,    68,    69,    69,    68,    36,    22,    23,
-      24,    25,    26,    27,    28,    29,    72,    73,    74,    75,
-      76,    67,    68,    68,    68,    57,    52,    35,    37,    68,
-      35,    35,    69,    35,    37,    36,    33,    35,    68,    70,
-      71,    84,    37,    54,    67,    54,    35,    37,    68,     8,
-      62,    70,    54,    54
+      45,    51,    59,    16,    17,    79,    31,    44,    14,    48,
+      50,    52,    59,    46,    47,    79,    34,    34,    48,    79,
+      36,    37,    32,    34,    35,    53,    54,    59,    34,    46,
+      79,    40,    41,    80,    81,    82,    53,    30,    55,    35,
+      37,    79,    53,    33,    35,    56,    57,    59,    55,    53,
+      35,    55,     4,     5,     7,    10,    11,    13,    55,    60,
+      61,    65,    66,    67,    79,    56,    58,    79,    14,    49,
+      50,    51,    55,    49,    36,    34,    36,    79,    34,     9,
+      21,    28,    34,    38,    62,    65,    67,    69,    70,    78,
+      80,    83,    84,    31,    60,    36,    34,    18,    19,    20,
+      64,    32,    36,    37,    49,    48,    39,    85,    18,    69,
+      70,    70,    69,    36,    22,    23,    24,    25,    26,    27,
+      28,    29,    73,    74,    75,    76,    77,    68,    69,    69,
+      69,    58,    35,    37,    69,    35,    35,    70,    35,    37,
+      36,    33,    69,    71,    72,    85,    37,    55,    68,    35,
+      37,    69,     8,    63,    71,    55,    55
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    42,    43,    44,    44,    44,    44,    44,    45,    46,
-      46,    47,    47,    48,    48,    49,    50,    50,    51,    51,
-      52,    52,    53,    54,    55,    55,    56,    57,    57,    58,
-      58,    59,    59,    60,    60,    60,    60,    60,    60,    60,
-      60,    61,    61,    62,    62,    63,    63,    63,    64,    64,
-      64,    65,    66,    66,    67,    67,    68,    68,    69,    69,
-      69,    69,    69,    69,    70,    70,    71,    71,    72,    72,
-      72,    72,    73,    73,    73,    73,    73,    74,    75,    76,
-      77,    77,    77,    78,    79,    79,    80,    81,    82,    83,
-      84
+       0,    42,    43,    44,    44,    44,    44,    45,    46,    46,
+      47,    47,    48,    48,    49,    49,    50,    51,    52,    52,
+      53,    53,    53,    54,    55,    56,    56,    57,    58,    58,
+      59,    59,    60,    60,    61,    61,    61,    61,    61,    61,
+      61,    61,    62,    62,    63,    63,    64,    64,    64,    65,
+      65,    65,    66,    67,    67,    68,    68,    68,    69,    69,
+      70,    70,    70,    70,    70,    70,    71,    71,    71,    72,
+      72,    73,    73,    73,    73,    74,    74,    74,    74,    74,
+      75,    76,    77,    78,    78,    78,    79,    80,    80,    81,
+      82,    83,    84,    85
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     5,     0,     2,     7,     7,     7,     3,     1,
-       3,     1,     4,     0,     2,     6,     1,     1,     1,     1,
-       0,     3,     2,     4,     0,     2,     3,     1,     3,     1,
-       1,     0,     2,     4,     2,     6,     7,     3,     2,     2,
-       1,     0,     1,     0,     2,     1,     1,     1,     4,     6,
-       4,     1,     1,     4,     0,     3,     3,     1,     1,     1,
-       1,     2,     2,     3,     0,     3,     1,     1,     1,     1,
+       0,     2,     5,     2,     7,     7,     2,     3,     1,     3,
+       1,     4,     0,     2,     2,     2,     6,     5,     1,     1,
+       0,     1,     3,     2,     4,     0,     2,     3,     1,     3,
+       1,     1,     0,     2,     4,     2,     6,     7,     3,     2,
+       2,     1,     0,     1,     0,     2,     1,     1,     1,     4,
+       6,     4,     1,     1,     4,     0,     1,     3,     3,     1,
+       1,     1,     1,     2,     2,     3,     0,     1,     3,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1
+       1,     1,     1,     1
 };
 
 
@@ -1299,550 +1300,568 @@ yyreduce:
     {
   case 2: /* program: TOKEN_CLASS TOKEN_PROGRAMCLASS TOKEN_LCB decl_list TOKEN_RCB  */
 #line 118 "phase2.y"
-                                                               {(yyval.nonTerminal) = new tree("<program>" , "<program>"); (yyval.nonTerminal)->addChild("TOKEN_CLASS" , (yyvsp[-4].str))->addChild("TOKEN_PROGRAMCLASS" , (yyvsp[-3].str))->addChild("TOKEN_LCB" , (yyvsp[-2].str))->addOthersChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_RCB" , (yyvsp[0].str));
-  root = (yyval.nonTerminal)->getRoot();}
-#line 1305 "phase2.tab.c"
+                                                               {(yyval.nonTerminal) = new tree("<program>" , "<program>"); (yyval.nonTerminal)->addChild("TOKEN_CLASS" , (yyvsp[-4].str))->addChild("TOKEN_PROGRAMCLASS" , (yyvsp[-3].str))->addChild("TOKEN_LCB" , (yyvsp[-2].str))->addOthersChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_RCB" , (yyvsp[0].str));
+  root = (yyval.nonTerminal);}
+#line 1306 "phase2.tab.c"
     break;
 
-  case 3: /* decl_list: %empty  */
-#line 122 "phase2.y"
-            {(yyval.nonTerminal) = new tree("<decl_list>" , "<decl_list>");}
-#line 1311 "phase2.tab.c"
-    break;
-
-  case 4: /* decl_list: field_decl decl_list  */
+  case 3: /* decl_list: field_decl decl_list  */
 #line 123 "phase2.y"
-                       {(yyval.nonTerminal) = new tree("<decl_list>" , "<decl_list>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal)->getRoot())->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1317 "phase2.tab.c"
+                       {(yyval.nonTerminal) = new tree("<decl_list>" , "<decl_list>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1312 "phase2.tab.c"
     break;
 
-  case 5: /* decl_list: TOKEN_VOIDTYPE method_namee TOKEN_LP args TOKEN_RP block method_decls  */
+  case 4: /* decl_list: TOKEN_VOIDTYPE id TOKEN_LP args TOKEN_RP block method_decls1  */
 #line 126 "phase2.y"
     {(yyval.nonTerminal) = new tree("<decl_list>" , "<decl_list>");
-    node* temp = new node("<method_decl>" ,  "<method_decl>");
-    temp->addChild("TOKEN_VOIDTYPE" , (yyvsp[-6].str))->addOthersChild((yyvsp[-5].nonTerminal)->getRoot())->addChild("TOKEN_LP" , (yyvsp[-4].str))->addOthersChild((yyvsp[-3].nonTerminal)->getRoot())->addChild("TOKEN_RP" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal)->getRoot());
-    (yyval.nonTerminal)->addChild(temp)->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1326 "phase2.tab.c"
+    tree* temp = new tree("<method_decl>" ,  "<method_decl>");
+    temp->addChild("TOKEN_VOIDTYPE" , (yyvsp[-6].str))->addChild((yyvsp[-5].nonTerminal))->addChild("TOKEN_LP" , (yyvsp[-4].str))->addOthersChild((yyvsp[-3].nonTerminal))->addChild("TOKEN_RP" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal));
+    (yyval.nonTerminal)->addChild(temp)->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1321 "phase2.tab.c"
     break;
 
-  case 6: /* decl_list: type TOKEN_MAINFUNC TOKEN_LP args TOKEN_RP block method_decls  */
+  case 5: /* decl_list: type id TOKEN_LP args TOKEN_RP block method_decls1  */
 #line 132 "phase2.y"
     {(yyval.nonTerminal) = new tree("<decl_list>" , "<decl_list>");
-    node* temp = new node("<method_decl>" ,  "<method_decl>");
-    temp->addChild((yyvsp[-6].terminal))->addChild("TOKEN_MAINFUNC" , (yyvsp[-5].str))->addChild("TOKEN_LP" , (yyvsp[-4].str))->addOthersChild((yyvsp[-3].nonTerminal)->getRoot())->addChild("TOKEN_RP" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal)->getRoot());
-    (yyval.nonTerminal)->addChild(temp)->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1335 "phase2.tab.c"
+    tree* temp = new tree("<method_decl>" ,  "<method_decl>");
+    temp->addChild((yyvsp[-6].nonTerminal))->addChild((yyvsp[-5].nonTerminal))->addChild("TOKEN_LP" , (yyvsp[-4].str))->addOthersChild((yyvsp[-3].nonTerminal))->addChild("TOKEN_RP" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal));
+    (yyval.nonTerminal)->addChild(temp)->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1330 "phase2.tab.c"
     break;
 
-  case 7: /* decl_list: type id TOKEN_LP args TOKEN_RP block method_decls  */
+  case 6: /* decl_list: main_decl method_decls  */
 #line 138 "phase2.y"
     {(yyval.nonTerminal) = new tree("<decl_list>" , "<decl_list>");
-    node* temp = new node("<method_decl>" ,  "<method_decl>");
-    temp->addChild((yyvsp[-6].terminal))->addChild((yyvsp[-5].terminal))->addChild("TOKEN_LP" , (yyvsp[-4].str))->addOthersChild((yyvsp[-3].nonTerminal)->getRoot())->addChild("TOKEN_RP" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal)->getRoot());
-    (yyval.nonTerminal)->addChild(temp)->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1344 "phase2.tab.c"
+    tree* temp = new tree("<method_decl>" ,  "<method_decl>");
+    temp->addOthersChild((yyvsp[-1].nonTerminal));
+    (yyval.nonTerminal)->addChild(temp)->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1339 "phase2.tab.c"
     break;
 
-  case 8: /* field_decl: type variables TOKEN_SEMICOLON  */
+  case 7: /* field_decl: type variables TOKEN_SEMICOLON  */
 #line 149 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<field_decl>" , "<field_decl>"); (yyval.nonTerminal)->addChild((yyvsp[-2].terminal))->addOthersChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
-#line 1350 "phase2.tab.c"
+    {(yyval.nonTerminal) = new tree("<field_decl>" , "<field_decl>"); (yyval.nonTerminal)->addChild((yyvsp[-2].nonTerminal))->addOthersChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
+#line 1345 "phase2.tab.c"
     break;
 
-  case 9: /* variables: variable  */
+  case 8: /* variables: variable  */
 #line 154 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<variables>" , "<variables>"); (yyval.nonTerminal)->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1356 "phase2.tab.c"
+    {(yyval.nonTerminal) = new tree("<variables>" , "<variables>"); (yyval.nonTerminal)->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1351 "phase2.tab.c"
     break;
 
-  case 10: /* variables: variable TOKEN_COMMA variables  */
+  case 9: /* variables: variable TOKEN_COMMA variables  */
 #line 157 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<variables>" , "<variables>"); (yyval.nonTerminal)->addOthersChild((yyvsp[-2].nonTerminal)->getRoot())->addChild("TOKEN_COMMA" , (yyvsp[-1].str))->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1362 "phase2.tab.c"
+    {(yyval.nonTerminal) = new tree("<variables>" , "<variables>"); (yyval.nonTerminal)->addOthersChild((yyvsp[-2].nonTerminal))->addChild("TOKEN_COMMA" , (yyvsp[-1].str))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1357 "phase2.tab.c"
     break;
 
-  case 11: /* variable: id  */
+  case 10: /* variable: id  */
 #line 162 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<variable>" , "<variable>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1368 "phase2.tab.c"
+    {(yyval.nonTerminal) = new tree("<variable>" , "<variable>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1363 "phase2.tab.c"
     break;
 
-  case 12: /* variable: id TOKEN_LB inTOKEN_literal TOKEN_RB  */
+  case 11: /* variable: id TOKEN_LB int_literal TOKEN_RB  */
 #line 165 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<variable>" , "<variable>"); (yyval.nonTerminal)->addChild((yyvsp[-3].terminal))->addChild("TOKEN_LB" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_RB" , (yyvsp[0].str));}
-#line 1374 "phase2.tab.c"
+    {(yyval.nonTerminal) = new tree("<variable>" , "<variable>"); (yyval.nonTerminal)->addChild((yyvsp[-3].nonTerminal))->addChild("TOKEN_LB" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_RB" , (yyvsp[0].str));}
+#line 1369 "phase2.tab.c"
     break;
 
-  case 13: /* method_decls: %empty  */
+  case 12: /* method_decls: %empty  */
 #line 172 "phase2.y"
                {(yyval.nonTerminal) = new tree("<method_decls>" , "<method_decls>");}
-#line 1380 "phase2.tab.c"
+#line 1375 "phase2.tab.c"
     break;
 
-  case 14: /* method_decls: method_decl method_decls  */
+  case 13: /* method_decls: method_decl method_decls  */
 #line 174 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<method_decls>" , "<method_decls>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal)->getRoot())->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1386 "phase2.tab.c"
+    {(yyval.nonTerminal) = new tree("<method_decls>" , "<method_decls>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1381 "phase2.tab.c"
     break;
 
-  case 15: /* method_decl: method_type method_namee TOKEN_LP args TOKEN_RP block  */
-#line 179 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<method_decl>" , "<method_decl>"); (yyval.nonTerminal)->addOthersChild((yyvsp[-5].nonTerminal)->getRoot())->addOthersChild((yyvsp[-4].nonTerminal)->getRoot())->addChild("TOKEN_LP" , (yyvsp[-3].str))->addOthersChild((yyvsp[-2].nonTerminal)->getRoot())->addChild("TOKEN_RP" , (yyvsp[-1].str))->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1392 "phase2.tab.c"
+  case 14: /* method_decls1: method_decl method_decls1  */
+#line 178 "phase2.y"
+    {(yyval.nonTerminal) = new tree("<method_decls1>" , "<method_decls1>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1387 "phase2.tab.c"
     break;
 
-  case 16: /* method_type: type  */
-#line 183 "phase2.y"
-       {(yyval.nonTerminal) = new tree("<method_type>" , "<method_type>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1398 "phase2.tab.c"
+  case 15: /* method_decls1: main_decl method_decls  */
+#line 180 "phase2.y"
+    {(yyval.nonTerminal) = new tree("<method_decls1>" , "<method_decls1>"); (yyval.nonTerminal)->addOthersChild((yyvsp[-1].nonTerminal))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1393 "phase2.tab.c"
     break;
 
-  case 17: /* method_type: TOKEN_VOIDTYPE  */
-#line 185 "phase2.y"
+  case 16: /* method_decl: method_type id TOKEN_LP args TOKEN_RP block  */
+#line 184 "phase2.y"
+    {(yyval.nonTerminal) = new tree("<method_decl>" , "<method_decl>"); (yyval.nonTerminal)->addOthersChild((yyvsp[-5].nonTerminal))->addChild((yyvsp[-4].nonTerminal))->addChild("TOKEN_LP" , (yyvsp[-3].str))->addOthersChild((yyvsp[-2].nonTerminal))->addChild("TOKEN_RP" , (yyvsp[-1].str))->addChild((yyvsp[0].nonTerminal));}
+#line 1399 "phase2.tab.c"
+    break;
+
+  case 17: /* main_decl: TOKEN_VOIDTYPE TOKEN_MAINFUNC TOKEN_LP TOKEN_RP block  */
+#line 188 "phase2.y"
+    {(yyval.nonTerminal) = new tree("<main_decls1>" , "<main_decls1>"); (yyval.nonTerminal)->addChild("TOKEN_VOIDTYPE" , (yyvsp[-4].str))->addChild("TOKEN_MAINFUNC" , (yyvsp[-3].str))->addChild("TOKEN_LP" , (yyvsp[-2].str))->addChild("TOKEN_RP" , (yyvsp[-1].str))->addChild((yyvsp[0].nonTerminal));}
+#line 1405 "phase2.tab.c"
+    break;
+
+  case 18: /* method_type: type  */
+#line 191 "phase2.y"
+       {(yyval.nonTerminal) = new tree("<method_type>" , "<method_type>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1411 "phase2.tab.c"
+    break;
+
+  case 19: /* method_type: TOKEN_VOIDTYPE  */
+#line 192 "phase2.y"
                  {(yyval.nonTerminal) = new tree("<method_type>" , "<method_type>"); (yyval.nonTerminal)->addChild("TOKEN_VOIDTYPE" , (yyvsp[0].str));}
-#line 1404 "phase2.tab.c"
-    break;
-
-  case 18: /* method_namee: TOKEN_MAINFUNC  */
-#line 189 "phase2.y"
-                 {(yyval.nonTerminal) = new tree("<method_namee>" , "<method_namee>"); (yyval.nonTerminal)->addChild("TOKEN_MAINFUNC" , (yyvsp[0].str));}
-#line 1410 "phase2.tab.c"
-    break;
-
-  case 19: /* method_namee: id  */
-#line 190 "phase2.y"
-     {(yyval.nonTerminal) = new tree("<method_namee>" , "<method_namee>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1416 "phase2.tab.c"
+#line 1417 "phase2.tab.c"
     break;
 
   case 20: /* args: %empty  */
-#line 193 "phase2.y"
-       {(yyval.nonTerminal) = new tree("<args>" , "<args>");}
-#line 1422 "phase2.tab.c"
-    break;
-
-  case 21: /* args: arg TOKEN_COMMA args  */
 #line 194 "phase2.y"
-                       {(yyval.nonTerminal) = new tree("<args>" , "<args>"); (yyval.nonTerminal)->addChild((yyvsp[-2].nonTerminal)->getRoot())->addChild("TOKEN_COMMA" , (yyvsp[-1].str))->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1428 "phase2.tab.c"
+       {(yyval.nonTerminal) = new tree("<args>" , "<args>");}
+#line 1423 "phase2.tab.c"
     break;
 
-  case 22: /* arg: type id  */
-#line 198 "phase2.y"
-          {(yyval.nonTerminal) = new tree("<arg>" , "<arg>"); (yyval.nonTerminal)->addChild((yyvsp[-1].terminal))->addChild((yyvsp[0].terminal));}
-#line 1434 "phase2.tab.c"
+  case 21: /* args: arg  */
+#line 195 "phase2.y"
+      {(yyval.nonTerminal) = new tree("<args>" , "<args>"); (yyval.nonTerminal)->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1429 "phase2.tab.c"
     break;
 
-  case 23: /* block: TOKEN_LCB var_decls statements TOKEN_RCB  */
-#line 203 "phase2.y"
-  {(yyval.nonTerminal) = new tree("<block>" , "<block>"); (yyval.nonTerminal)->addChild("TOKEN_LCB" , (yyvsp[-3].str))->addOthersChild((yyvsp[-2].nonTerminal)->getRoot())->addOthersChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_RCB" , (yyvsp[0].str));}
-#line 1440 "phase2.tab.c"
+  case 22: /* args: arg TOKEN_COMMA args  */
+#line 196 "phase2.y"
+                       {(yyval.nonTerminal) = new tree("<args>" , "<args>"); (yyval.nonTerminal)->addOthersChild((yyvsp[-2].nonTerminal))->addChild("TOKEN_COMMA" , (yyvsp[-1].str))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1435 "phase2.tab.c"
     break;
 
-  case 24: /* var_decls: %empty  */
-#line 207 "phase2.y"
+  case 23: /* arg: type id  */
+#line 200 "phase2.y"
+          {(yyval.nonTerminal) = new tree("<arg>" , "<arg>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal))->addChild((yyvsp[0].nonTerminal));}
+#line 1441 "phase2.tab.c"
+    break;
+
+  case 24: /* block: TOKEN_LCB var_decls statements TOKEN_RCB  */
+#line 205 "phase2.y"
+  {(yyval.nonTerminal) = new tree("<block>" , "<block>"); (yyval.nonTerminal)->addChild("TOKEN_LCB" , (yyvsp[-3].str))->addOthersChild((yyvsp[-2].nonTerminal))->addOthersChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_RCB" , (yyvsp[0].str));}
+#line 1447 "phase2.tab.c"
+    break;
+
+  case 25: /* var_decls: %empty  */
+#line 209 "phase2.y"
            {(yyval.nonTerminal) = new tree("<var_decls>" , "<var_decls>");}
-#line 1446 "phase2.tab.c"
+#line 1453 "phase2.tab.c"
     break;
 
-  case 25: /* var_decls: var_decl var_decls  */
-#line 208 "phase2.y"
-                     {(yyval.nonTerminal) = new tree("<var_decls>" , "<var_decls>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal)->getRoot())->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1452 "phase2.tab.c"
+  case 26: /* var_decls: var_decl var_decls  */
+#line 210 "phase2.y"
+                     {(yyval.nonTerminal) = new tree("<var_decls>" , "<var_decls>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1459 "phase2.tab.c"
     break;
 
-  case 26: /* var_decl: type ids TOKEN_SEMICOLON  */
-#line 211 "phase2.y"
-                           {(yyval.nonTerminal) = new tree("<var_decl>" , "<var_decl>"); (yyval.nonTerminal)->addChild((yyvsp[-2].terminal))->addOthersChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
-#line 1458 "phase2.tab.c"
+  case 27: /* var_decl: type ids TOKEN_SEMICOLON  */
+#line 213 "phase2.y"
+                           {(yyval.nonTerminal) = new tree("<var_decl>" , "<var_decl>"); (yyval.nonTerminal)->addChild((yyvsp[-2].nonTerminal))->addOthersChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
+#line 1465 "phase2.tab.c"
     break;
 
-  case 27: /* ids: id  */
-#line 214 "phase2.y"
-      {(yyval.nonTerminal) = new tree("<ids>" , "<ids>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1464 "phase2.tab.c"
+  case 28: /* ids: id  */
+#line 216 "phase2.y"
+      {(yyval.nonTerminal) = new tree("<ids>" , "<ids>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1471 "phase2.tab.c"
     break;
 
-  case 28: /* ids: id TOKEN_COMMA ids  */
-#line 215 "phase2.y"
-                     {(yyval.nonTerminal) = new tree("<ids>" , "<ids>"); (yyval.nonTerminal)->addChild((yyvsp[-2].terminal))->addChild("TOKEN_COMMA" , (yyvsp[-1].str))->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1470 "phase2.tab.c"
+  case 29: /* ids: id TOKEN_COMMA ids  */
+#line 217 "phase2.y"
+                     {(yyval.nonTerminal) = new tree("<ids>" , "<ids>"); (yyval.nonTerminal)->addChild((yyvsp[-2].nonTerminal))->addChild("TOKEN_COMMA" , (yyvsp[-1].str))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1477 "phase2.tab.c"
     break;
 
-  case 29: /* type: TOKEN_INTTYPE  */
-#line 221 "phase2.y"
-                {(yyval.terminal) = new node("<type>" , "<type>"); (yyval.terminal)->addChild("TOKEN_INTTYPE" , (yyvsp[0].str));}
-#line 1476 "phase2.tab.c"
+  case 30: /* type: TOKEN_INTTYPE  */
+#line 223 "phase2.y"
+                {(yyval.nonTerminal) = new tree("<type>" , "<type>"); (yyval.nonTerminal)->addChild("TOKEN_INTTYPE" , (yyvsp[0].str));}
+#line 1483 "phase2.tab.c"
     break;
 
-  case 30: /* type: TOKEN_BOOLEANTYPE  */
-#line 222 "phase2.y"
-                    {(yyval.terminal) = new node("<type>" , "<type>"); (yyval.terminal)->addChild("TOKEN_BOOLEANTYPE" , (yyvsp[0].str));}
-#line 1482 "phase2.tab.c"
+  case 31: /* type: TOKEN_BOOLEANTYPE  */
+#line 224 "phase2.y"
+                    {(yyval.nonTerminal) = new tree("<type>" , "<type>"); (yyval.nonTerminal)->addChild("TOKEN_BOOLEANTYPE" , (yyvsp[0].str));}
+#line 1489 "phase2.tab.c"
     break;
 
-  case 31: /* statements: %empty  */
-#line 227 "phase2.y"
+  case 32: /* statements: %empty  */
+#line 229 "phase2.y"
             {(yyval.nonTerminal) = new tree("<statements>" , "<statements>");}
-#line 1488 "phase2.tab.c"
+#line 1495 "phase2.tab.c"
     break;
 
-  case 32: /* statements: statement statements  */
-#line 228 "phase2.y"
-                       {(yyval.nonTerminal) = new tree("<statements>" , "<statements>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal)->getRoot())->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1494 "phase2.tab.c"
+  case 33: /* statements: statement statements  */
+#line 230 "phase2.y"
+                       {(yyval.nonTerminal) = new tree("<statements>" , "<statements>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1501 "phase2.tab.c"
     break;
 
-  case 33: /* statement: location assign_op expr TOKEN_SEMICOLON  */
-#line 232 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild((yyvsp[-3].nonTerminal)->getRoot())->addChild((yyvsp[-2].terminal))->addChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
-#line 1500 "phase2.tab.c"
+  case 34: /* statement: location assign_op expr TOKEN_SEMICOLON  */
+#line 234 "phase2.y"
+    {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild((yyvsp[-3].nonTerminal))->addChild((yyvsp[-2].nonTerminal))->addChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
+#line 1507 "phase2.tab.c"
     break;
 
-  case 34: /* statement: method_call TOKEN_SEMICOLON  */
-#line 235 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
-#line 1506 "phase2.tab.c"
-    break;
-
-  case 35: /* statement: TOKEN_IFCONDITION TOKEN_LP expr TOKEN_RP block else_block  */
+  case 35: /* statement: method_call TOKEN_SEMICOLON  */
 #line 237 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild("TOKEN_IFCONDITION" , (yyvsp[-5].str))->addChild("TOKEN_LP" , (yyvsp[-4].str))->addChild((yyvsp[-3].nonTerminal)->getRoot())->addChild("TOKEN_RP" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal)->getRoot())->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1512 "phase2.tab.c"
+    {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
+#line 1513 "phase2.tab.c"
     break;
 
-  case 36: /* statement: TOKEN_LOOP id TOKEN_ASSIGNOP expr TOKEN_COMMA expr block  */
-#line 240 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild("TOKEN_LOOP" , (yyvsp[-6].str))->addChild((yyvsp[-5].terminal))->addChild("TOKEN_ASSIGNOP" , (yyvsp[-4].str))->addChild((yyvsp[-3].nonTerminal)->getRoot())->addChild("TOKEN_COMMA" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal)->getRoot())->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1518 "phase2.tab.c"
+  case 36: /* statement: TOKEN_IFCONDITION TOKEN_LP expr TOKEN_RP block else_block  */
+#line 239 "phase2.y"
+    {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild("TOKEN_IFCONDITION" , (yyvsp[-5].str))->addChild("TOKEN_LP" , (yyvsp[-4].str))->addChild((yyvsp[-3].nonTerminal))->addChild("TOKEN_RP" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1519 "phase2.tab.c"
     break;
 
-  case 37: /* statement: TOKEN_RETURN nexpr TOKEN_SEMICOLON  */
+  case 37: /* statement: TOKEN_LOOP id TOKEN_ASSIGNOP expr TOKEN_COMMA expr block  */
 #line 242 "phase2.y"
-                                     {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild("TOKEN_RETURN" , (yyvsp[-2].str))->addOthersChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
-#line 1524 "phase2.tab.c"
+    {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild("TOKEN_LOOP" , (yyvsp[-6].str))->addChild((yyvsp[-5].nonTerminal))->addChild("TOKEN_ASSIGNOP" , (yyvsp[-4].str))->addChild((yyvsp[-3].nonTerminal))->addChild("TOKEN_COMMA" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal))->addChild((yyvsp[0].nonTerminal));}
+#line 1525 "phase2.tab.c"
     break;
 
-  case 38: /* statement: TOKEN_BREAKSTMT TOKEN_SEMICOLON  */
+  case 38: /* statement: TOKEN_RETURN nexpr TOKEN_SEMICOLON  */
 #line 244 "phase2.y"
-                                  {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild("TOKEN_BREAKSTMT" , (yyvsp[-1].str))->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
-#line 1530 "phase2.tab.c"
+                                     {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild("TOKEN_RETURN" , (yyvsp[-2].str))->addOthersChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
+#line 1531 "phase2.tab.c"
     break;
 
-  case 39: /* statement: TOKEN_CONTINUESTMT TOKEN_SEMICOLON  */
+  case 39: /* statement: TOKEN_BREAKSTMT TOKEN_SEMICOLON  */
 #line 246 "phase2.y"
-                                     {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild("TOKEN_CONTINUESTMT" , (yyvsp[-1].str))->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
-#line 1536 "phase2.tab.c"
+                                  {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild("TOKEN_BREAKSTMT" , (yyvsp[-1].str))->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
+#line 1537 "phase2.tab.c"
     break;
 
-  case 40: /* statement: block  */
+  case 40: /* statement: TOKEN_CONTINUESTMT TOKEN_SEMICOLON  */
 #line 248 "phase2.y"
-        {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1542 "phase2.tab.c"
+                                     {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild("TOKEN_CONTINUESTMT" , (yyvsp[-1].str))->addChild("TOKEN_SEMICOLON" , (yyvsp[0].str));}
+#line 1543 "phase2.tab.c"
     break;
 
-  case 41: /* nexpr: %empty  */
-#line 251 "phase2.y"
+  case 41: /* statement: block  */
+#line 250 "phase2.y"
+        {(yyval.nonTerminal) = new tree("<statement>" , "<statement>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1549 "phase2.tab.c"
+    break;
+
+  case 42: /* nexpr: %empty  */
+#line 253 "phase2.y"
        {(yyval.nonTerminal) = new tree("<nexpr>" , "<nexpr>");}
-#line 1548 "phase2.tab.c"
+#line 1555 "phase2.tab.c"
     break;
 
-  case 42: /* nexpr: expr  */
-#line 252 "phase2.y"
-       {(yyval.nonTerminal) = new tree("<nexpr>" , "<nexpr>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1554 "phase2.tab.c"
-    break;
-
-  case 43: /* else_block: %empty  */
+  case 43: /* nexpr: expr  */
 #line 254 "phase2.y"
+       {(yyval.nonTerminal) = new tree("<nexpr>" , "<nexpr>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1561 "phase2.tab.c"
+    break;
+
+  case 44: /* else_block: %empty  */
+#line 256 "phase2.y"
             {(yyval.nonTerminal) = new tree("<else_block>" , "<else_block>");}
-#line 1560 "phase2.tab.c"
+#line 1567 "phase2.tab.c"
     break;
 
-  case 44: /* else_block: TOKEN_ELSECONDITION block  */
-#line 255 "phase2.y"
-                            {(yyval.nonTerminal) = new tree("<else_block>" , "<else_block>"); (yyval.nonTerminal)->addChild("TOKEN_ELSECONDITION" , (yyvsp[-1].str))->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1566 "phase2.tab.c"
+  case 45: /* else_block: TOKEN_ELSECONDITION block  */
+#line 257 "phase2.y"
+                            {(yyval.nonTerminal) = new tree("<else_block>" , "<else_block>"); (yyval.nonTerminal)->addChild("TOKEN_ELSECONDITION" , (yyvsp[-1].str))->addChild((yyvsp[0].nonTerminal));}
+#line 1573 "phase2.tab.c"
     break;
 
-  case 45: /* assign_op: TOKEN_ASSIGNOP  */
-#line 260 "phase2.y"
-                 {(yyval.terminal) = new node("<assign_op>" , "<assign_op>"); (yyval.terminal)->addChild("TOKEN_ASSIGNOP" , (yyvsp[0].str));}
-#line 1572 "phase2.tab.c"
-    break;
-
-  case 46: /* assign_op: TOKEN_MINUSASSIGNOP  */
-#line 261 "phase2.y"
-                      {(yyval.terminal) = new node("<assign_op>" , "<assign_op>"); (yyval.terminal)->addChild("TOKEN_MINUSASSIGNOP" , (yyvsp[0].str));}
-#line 1578 "phase2.tab.c"
-    break;
-
-  case 47: /* assign_op: TOKEN_PLUSASSIGNOP  */
+  case 46: /* assign_op: TOKEN_ASSIGNOP  */
 #line 262 "phase2.y"
-                     {(yyval.terminal) = new node("<assign_op>" , "<assign_op>"); (yyval.terminal)->addChild("TOKEN_PLUSASSIGNOP" , (yyvsp[0].str));}
-#line 1584 "phase2.tab.c"
+                 {(yyval.nonTerminal) = new tree("<assign_op>" , "<assign_op>"); (yyval.nonTerminal)->addChild("TOKEN_ASSIGNOP" , (yyvsp[0].str));}
+#line 1579 "phase2.tab.c"
     break;
 
-  case 48: /* method_call: method_name TOKEN_LP exprs TOKEN_RP  */
-#line 269 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<method_call>" , "<method_call>"); (yyval.nonTerminal)->addChild((yyvsp[-3].nonTerminal)->getRoot())->addChild("TOKEN_LP" , (yyvsp[-2].str))->addOthersChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_RP" , (yyvsp[0].str));}
-#line 1590 "phase2.tab.c"
+  case 47: /* assign_op: TOKEN_MINUSASSIGNOP  */
+#line 263 "phase2.y"
+                      {(yyval.nonTerminal) = new tree("<assign_op>" , "<assign_op>"); (yyval.nonTerminal)->addChild("TOKEN_MINUSASSIGNOP" , (yyvsp[0].str));}
+#line 1585 "phase2.tab.c"
     break;
 
-  case 49: /* method_call: TOKEN_CALLOUT TOKEN_LP string_literal TOKEN_COMMA callouTOKEN_args TOKEN_RP  */
-#line 272 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<method_call>" , "<method_call>"); (yyval.nonTerminal)->addChild("TOKEN_CALLOUT" , (yyvsp[-5].str))->addChild("TOKEN_LP" , (yyvsp[-4].str))->addChild((yyvsp[-3].terminal))->addChild("TOKEN_COMMA" , (yyvsp[-2].str))->addOthersChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_RP" , (yyvsp[0].str));}
-#line 1596 "phase2.tab.c"
+  case 48: /* assign_op: TOKEN_PLUSASSIGNOP  */
+#line 264 "phase2.y"
+                     {(yyval.nonTerminal) = new tree("<assign_op>" , "<assign_op>"); (yyval.nonTerminal)->addChild("TOKEN_PLUSASSIGNOP" , (yyvsp[0].str));}
+#line 1591 "phase2.tab.c"
     break;
 
-  case 50: /* method_call: TOKEN_CALLOUT TOKEN_LP string_literal TOKEN_RP  */
-#line 275 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<method_call>" , "<method_call>"); (yyval.nonTerminal)->addChild("TOKEN_CALLOUT" , (yyvsp[-3].str))->addChild("TOKEN_LP" , (yyvsp[-2].str))->addChild((yyvsp[-1].terminal))->addChild("TOKEN_RP" , (yyvsp[0].str));}
-#line 1602 "phase2.tab.c"
+  case 49: /* method_call: method_name TOKEN_LP exprs TOKEN_RP  */
+#line 271 "phase2.y"
+    {(yyval.nonTerminal) = new tree("<method_call>" , "<method_call>"); (yyval.nonTerminal)->addChild((yyvsp[-3].nonTerminal))->addChild("TOKEN_LP" , (yyvsp[-2].str))->addOthersChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_RP" , (yyvsp[0].str));}
+#line 1597 "phase2.tab.c"
     break;
 
-  case 51: /* method_name: id  */
-#line 281 "phase2.y"
-     {(yyval.nonTerminal) = new tree("<method_name>" , "<method_name>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1608 "phase2.tab.c"
+  case 50: /* method_call: TOKEN_CALLOUT TOKEN_LP string_literal TOKEN_COMMA callout_args TOKEN_RP  */
+#line 274 "phase2.y"
+    {(yyval.nonTerminal) = new tree("<method_call>" , "<method_call>"); (yyval.nonTerminal)->addChild("TOKEN_CALLOUT" , (yyvsp[-5].str))->addChild("TOKEN_LP" , (yyvsp[-4].str))->addChild((yyvsp[-3].nonTerminal))->addChild("TOKEN_COMMA" , (yyvsp[-2].str))->addOthersChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_RP" , (yyvsp[0].str));}
+#line 1603 "phase2.tab.c"
     break;
 
-  case 52: /* location: id  */
-#line 286 "phase2.y"
-      {(yyval.nonTerminal) = new tree("<location>" , "<location>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1614 "phase2.tab.c"
+  case 51: /* method_call: TOKEN_CALLOUT TOKEN_LP string_literal TOKEN_RP  */
+#line 277 "phase2.y"
+    {(yyval.nonTerminal) = new tree("<method_call>" , "<method_call>"); (yyval.nonTerminal)->addChild("TOKEN_CALLOUT" , (yyvsp[-3].str))->addChild("TOKEN_LP" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_RP" , (yyvsp[0].str));}
+#line 1609 "phase2.tab.c"
     break;
 
-  case 53: /* location: id TOKEN_LB expr TOKEN_RB  */
-#line 287 "phase2.y"
-                            {(yyval.nonTerminal) = new tree("<location>" , "<location>"); (yyval.nonTerminal)->addChild((yyvsp[-3].terminal))->addChild("TOKEN_LB" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_RB" , (yyvsp[0].str));}
-#line 1620 "phase2.tab.c"
+  case 52: /* method_name: id  */
+#line 283 "phase2.y"
+     {(yyval.nonTerminal) = new tree("<method_name>" , "<method_name>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1615 "phase2.tab.c"
     break;
 
-  case 54: /* exprs: %empty  */
-#line 291 "phase2.y"
+  case 53: /* location: id  */
+#line 288 "phase2.y"
+      {(yyval.nonTerminal) = new tree("<location>" , "<location>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1621 "phase2.tab.c"
+    break;
+
+  case 54: /* location: id TOKEN_LB expr TOKEN_RB  */
+#line 289 "phase2.y"
+                            {(yyval.nonTerminal) = new tree("<location>" , "<location>"); (yyval.nonTerminal)->addChild((yyvsp[-3].nonTerminal))->addChild("TOKEN_LB" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_RB" , (yyvsp[0].str));}
+#line 1627 "phase2.tab.c"
+    break;
+
+  case 55: /* exprs: %empty  */
+#line 293 "phase2.y"
        {(yyval.nonTerminal) = new tree("<exprs>" , "<exprs>");}
-#line 1626 "phase2.tab.c"
+#line 1633 "phase2.tab.c"
     break;
 
-  case 55: /* exprs: expr TOKEN_COMMA exprs  */
-#line 292 "phase2.y"
-                         {(yyval.nonTerminal) = new tree("<exprs>" , "<exprs>"); (yyval.nonTerminal)->addChild((yyvsp[-2].nonTerminal)->getRoot())->addChild("TOKEN_COMMA" , (yyvsp[-1].str))->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1632 "phase2.tab.c"
+  case 56: /* exprs: expr  */
+#line 294 "phase2.y"
+       {(yyval.nonTerminal) = new tree("<exprs>" , "<exprs>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1639 "phase2.tab.c"
     break;
 
-  case 56: /* expr: expr bin_op expr1  */
+  case 57: /* exprs: expr TOKEN_COMMA exprs  */
 #line 295 "phase2.y"
-                    {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild((yyvsp[-2].nonTerminal)->getRoot())->addChild((yyvsp[-1].nonTerminal)->getRoot())->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1638 "phase2.tab.c"
+                         {(yyval.nonTerminal) = new tree("<exprs>" , "<exprs>"); (yyval.nonTerminal)->addChild((yyvsp[-2].nonTerminal))->addChild("TOKEN_COMMA" , (yyvsp[-1].str))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1645 "phase2.tab.c"
     break;
 
-  case 57: /* expr: expr1  */
-#line 296 "phase2.y"
-        {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1644 "phase2.tab.c"
+  case 58: /* expr: expr bin_op expr1  */
+#line 298 "phase2.y"
+                    {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild((yyvsp[-2].nonTerminal))->addChild((yyvsp[-1].nonTerminal))->addChild((yyvsp[0].nonTerminal));}
+#line 1651 "phase2.tab.c"
     break;
 
-  case 58: /* expr1: location  */
+  case 59: /* expr: expr1  */
 #line 299 "phase2.y"
-           {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1650 "phase2.tab.c"
+        {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1657 "phase2.tab.c"
     break;
 
-  case 59: /* expr1: method_call  */
-#line 300 "phase2.y"
-              {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1656 "phase2.tab.c"
-    break;
-
-  case 60: /* expr1: literal  */
-#line 301 "phase2.y"
-          {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1662 "phase2.tab.c"
-    break;
-
-  case 61: /* expr1: TOKEN_MINUSOP expr1  */
+  case 60: /* expr1: location  */
 #line 302 "phase2.y"
-                      {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild("TOKEN_MiNUSOP" , (yyvsp[-1].str))->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1668 "phase2.tab.c"
+           {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1663 "phase2.tab.c"
     break;
 
-  case 62: /* expr1: TOKEN_LOGICOP expr1  */
+  case 61: /* expr1: method_call  */
 #line 303 "phase2.y"
-                      {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild("TOKEN_LOGICOP" , (yyvsp[-1].str))->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1674 "phase2.tab.c"
+              {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1669 "phase2.tab.c"
     break;
 
-  case 63: /* expr1: TOKEN_LP expr TOKEN_RP  */
+  case 62: /* expr1: literal  */
 #line 304 "phase2.y"
-                         {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild("TOKEN_LP" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal)->getRoot())->addChild("TOKEN_RP" , (yyvsp[0].str));}
-#line 1680 "phase2.tab.c"
+          {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1675 "phase2.tab.c"
     break;
 
-  case 64: /* callouTOKEN_args: %empty  */
-#line 309 "phase2.y"
-                  {(yyval.nonTerminal) = new tree("<callouTOKEN_args>" , "<callouTOKEN_args>");}
-#line 1686 "phase2.tab.c"
+  case 63: /* expr1: TOKEN_MINUSOP expr1  */
+#line 305 "phase2.y"
+                      {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild("TOKEN_MiNUSOP" , (yyvsp[-1].str))->addChild((yyvsp[0].nonTerminal));}
+#line 1681 "phase2.tab.c"
     break;
 
-  case 65: /* callouTOKEN_args: callouTOKEN_arg TOKEN_COMMA callouTOKEN_args  */
-#line 311 "phase2.y"
-    {(yyval.nonTerminal) = new tree("<callouTOKEN_args>" , "<callouTOKEN_args>"); (yyval.nonTerminal)->addChild((yyvsp[-2].nonTerminal)->getRoot())->addChild("TOKEN_COMMA" , (yyvsp[-1].str))->addOthersChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1692 "phase2.tab.c"
+  case 64: /* expr1: TOKEN_LOGICOP expr1  */
+#line 306 "phase2.y"
+                      {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild("TOKEN_LOGICOP" , (yyvsp[-1].str))->addChild((yyvsp[0].nonTerminal));}
+#line 1687 "phase2.tab.c"
     break;
 
-  case 66: /* callouTOKEN_arg: expr  */
-#line 314 "phase2.y"
-       {(yyval.nonTerminal) = new tree("<callouTOKEN_arg>" , "<callouTOKEN_arg>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1698 "phase2.tab.c"
+  case 65: /* expr1: TOKEN_LP expr TOKEN_RP  */
+#line 307 "phase2.y"
+                         {(yyval.nonTerminal) = new tree("<expr>" , "<expr>"); (yyval.nonTerminal)->addChild("TOKEN_LP" , (yyvsp[-2].str))->addChild((yyvsp[-1].nonTerminal))->addChild("TOKEN_RP" , (yyvsp[0].str));}
+#line 1693 "phase2.tab.c"
     break;
 
-  case 67: /* callouTOKEN_arg: string_literal  */
+  case 66: /* callout_args: %empty  */
+#line 312 "phase2.y"
+              {(yyval.nonTerminal) = new tree("<callout_args>" , "<callout_args>");}
+#line 1699 "phase2.tab.c"
+    break;
+
+  case 67: /* callout_args: callout_arg  */
+#line 313 "phase2.y"
+              {(yyval.nonTerminal) = new tree("<callout_args>" , "<callout_args>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1705 "phase2.tab.c"
+    break;
+
+  case 68: /* callout_args: callout_arg TOKEN_COMMA callout_args  */
 #line 315 "phase2.y"
-                 {(yyval.nonTerminal) = new tree("<callouTOKEN_arg>" , "<callouTOKEN_arg>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1704 "phase2.tab.c"
+    {(yyval.nonTerminal) = new tree("<callout_args>" , "<callout_args>"); (yyval.nonTerminal)->addChild((yyvsp[-2].nonTerminal))->addChild("TOKEN_COMMA" , (yyvsp[-1].str))->addOthersChild((yyvsp[0].nonTerminal));}
+#line 1711 "phase2.tab.c"
     break;
 
-  case 68: /* bin_op: arith_op  */
-#line 321 "phase2.y"
-           {(yyval.nonTerminal) = new tree("<bin_op>" , "<bin_op>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1710 "phase2.tab.c"
+  case 69: /* callout_arg: expr  */
+#line 318 "phase2.y"
+       {(yyval.nonTerminal) = new tree("<callout_arg>" , "<callout_arg>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1717 "phase2.tab.c"
     break;
 
-  case 69: /* bin_op: rel_op  */
-#line 322 "phase2.y"
-         {(yyval.nonTerminal) = new tree("<bin_op>" , "<bin_op>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1716 "phase2.tab.c"
+  case 70: /* callout_arg: string_literal  */
+#line 319 "phase2.y"
+                 {(yyval.nonTerminal) = new tree("<callout_arg>" , "<callout_arg>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1723 "phase2.tab.c"
     break;
 
-  case 70: /* bin_op: eq_op  */
-#line 323 "phase2.y"
-        {(yyval.nonTerminal) = new tree("<bin_op>" , "<bin_op>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1722 "phase2.tab.c"
+  case 71: /* bin_op: arith_op  */
+#line 325 "phase2.y"
+           {(yyval.nonTerminal) = new tree("<bin_op>" , "<bin_op>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1729 "phase2.tab.c"
     break;
 
-  case 71: /* bin_op: cond_op  */
-#line 324 "phase2.y"
-         {(yyval.nonTerminal) = new tree("<bin_op>" , "<bin_op>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1728 "phase2.tab.c"
+  case 72: /* bin_op: rel_op  */
+#line 326 "phase2.y"
+         {(yyval.nonTerminal) = new tree("<bin_op>" , "<bin_op>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1735 "phase2.tab.c"
     break;
 
-  case 72: /* arith_op: TOKEN_MODULSOP  */
-#line 329 "phase2.y"
-                 {(yyval.terminal) = new node("<arith_op>" , "<arith_op>"); (yyval.terminal)->addChild("TOKEN_MODULSOP" , (yyvsp[0].str));}
-#line 1734 "phase2.tab.c"
+  case 73: /* bin_op: eq_op  */
+#line 327 "phase2.y"
+        {(yyval.nonTerminal) = new tree("<bin_op>" , "<bin_op>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1741 "phase2.tab.c"
     break;
 
-  case 73: /* arith_op: TOKEN_DIVISIONOP  */
-#line 330 "phase2.y"
-                   {(yyval.terminal) = new node("<arith_op>" , "<arith_op>"); (yyval.terminal)->addChild("TOKEN_DIVISIONOP" , (yyvsp[0].str));}
-#line 1740 "phase2.tab.c"
+  case 74: /* bin_op: cond_op  */
+#line 328 "phase2.y"
+         {(yyval.nonTerminal) = new tree("<bin_op>" , "<bin_op>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1747 "phase2.tab.c"
     break;
 
-  case 74: /* arith_op: TOKEN_MULTIPLEOP  */
-#line 331 "phase2.y"
-                   {(yyval.terminal) = new node("<arith_op>" , "<arith_op>"); (yyval.terminal)->addChild("TOKEN_MULTIPLEOP" , (yyvsp[0].str));}
-#line 1746 "phase2.tab.c"
-    break;
-
-  case 75: /* arith_op: TOKEN_MINUSOP  */
-#line 332 "phase2.y"
-                {(yyval.terminal) = new node("<arith_op>" , "<arith_op>"); (yyval.terminal)->addChild("TOKEN_MINUSOP" , (yyvsp[0].str));}
-#line 1752 "phase2.tab.c"
-    break;
-
-  case 76: /* arith_op: TOKEN_PLUSOP  */
+  case 75: /* arith_op: TOKEN_MODULSOP  */
 #line 333 "phase2.y"
-               {(yyval.terminal) = new node("<arith_op>" , "<arith_op>"); (yyval.terminal)->addChild("TOKEN_PLUSOP" , (yyvsp[0].str));}
-#line 1758 "phase2.tab.c"
+                 {(yyval.nonTerminal) = new tree("<arith_op>" , "<arith_op>"); (yyval.nonTerminal)->addChild("TOKEN_MODULSOP" , (yyvsp[0].str));}
+#line 1753 "phase2.tab.c"
     break;
 
-  case 77: /* rel_op: TOKEN_RELATIONOP  */
-#line 339 "phase2.y"
-                   {(yyval.terminal) = new node("<rel_op>" , "<rel_op>"); (yyval.terminal)->addChild("TOKEN_RELATIONOP" , (yyvsp[0].str));}
-#line 1764 "phase2.tab.c"
+  case 76: /* arith_op: TOKEN_DIVISIONOP  */
+#line 334 "phase2.y"
+                   {(yyval.nonTerminal) = new tree("<arith_op>" , "<arith_op>"); (yyval.nonTerminal)->addChild("TOKEN_DIVISIONOP" , (yyvsp[0].str));}
+#line 1759 "phase2.tab.c"
     break;
 
-  case 78: /* eq_op: TOKEN_EQUALITYOP  */
-#line 344 "phase2.y"
-                   {(yyval.terminal) = new node("<eq_op>" , "<eq_op>"); (yyval.terminal)->addChild("TOKEN_EQUALITYOP" , (yyvsp[0].str));}
-#line 1770 "phase2.tab.c"
+  case 77: /* arith_op: TOKEN_MULTIPLEOP  */
+#line 335 "phase2.y"
+                   {(yyval.nonTerminal) = new tree("<arith_op>" , "<arith_op>"); (yyval.nonTerminal)->addChild("TOKEN_MULTIPLEOP" , (yyvsp[0].str));}
+#line 1765 "phase2.tab.c"
     break;
 
-  case 79: /* cond_op: TOKEN_CONDITIONOP  */
-#line 349 "phase2.y"
-                    {(yyval.terminal) = new node("<cond_op>" , "<cond_op>"); (yyval.terminal)->addChild("TOKEN_CONDITIONOP" , (yyvsp[0].str));}
-#line 1776 "phase2.tab.c"
+  case 78: /* arith_op: TOKEN_MINUSOP  */
+#line 336 "phase2.y"
+                {(yyval.nonTerminal) = new tree("<arith_op>" , "<arith_op>"); (yyval.nonTerminal)->addChild("TOKEN_MINUSOP" , (yyvsp[0].str));}
+#line 1771 "phase2.tab.c"
     break;
 
-  case 80: /* literal: inTOKEN_literal  */
-#line 354 "phase2.y"
-                  {(yyval.nonTerminal) = new tree("<literal>" , "<literal>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal)->getRoot());}
-#line 1782 "phase2.tab.c"
+  case 79: /* arith_op: TOKEN_PLUSOP  */
+#line 337 "phase2.y"
+               {(yyval.nonTerminal) = new tree("<arith_op>" , "<arith_op>"); (yyval.nonTerminal)->addChild("TOKEN_PLUSOP" , (yyvsp[0].str));}
+#line 1777 "phase2.tab.c"
     break;
 
-  case 81: /* literal: char_literal  */
-#line 355 "phase2.y"
-               {(yyval.nonTerminal) = new tree("<literal>" , "<literal>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1788 "phase2.tab.c"
+  case 80: /* rel_op: TOKEN_RELATIONOP  */
+#line 343 "phase2.y"
+                   {(yyval.nonTerminal) = new tree("<rel_op>" , "<rel_op>"); (yyval.nonTerminal)->addChild("TOKEN_RELATIONOP" , (yyvsp[0].str));}
+#line 1783 "phase2.tab.c"
     break;
 
-  case 82: /* literal: bool_literal  */
-#line 356 "phase2.y"
-               {(yyval.nonTerminal) = new tree("<literal>" , "<literal>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1794 "phase2.tab.c"
+  case 81: /* eq_op: TOKEN_EQUALITYOP  */
+#line 348 "phase2.y"
+                   {(yyval.nonTerminal) = new tree("<eq_op>" , "<eq_op>"); (yyval.nonTerminal)->addChild("TOKEN_EQUALITYOP" , (yyvsp[0].str));}
+#line 1789 "phase2.tab.c"
     break;
 
-  case 83: /* id: TOKEN_ID  */
-#line 361 "phase2.y"
-           {(yyval.terminal) = new node("<id>" , "<id>"); (yyval.terminal)->addChild("TOKEN_ID" , (yyvsp[0].str));}
-#line 1800 "phase2.tab.c"
+  case 82: /* cond_op: TOKEN_CONDITIONOP  */
+#line 353 "phase2.y"
+                    {(yyval.nonTerminal) = new tree("<cond_op>" , "<cond_op>"); (yyval.nonTerminal)->addChild("TOKEN_CONDITIONOP" , (yyvsp[0].str));}
+#line 1795 "phase2.tab.c"
     break;
 
-  case 84: /* inTOKEN_literal: deciamla_literal  */
+  case 83: /* literal: int_literal  */
+#line 358 "phase2.y"
+              {(yyval.nonTerminal) = new tree("<literal>" , "<literal>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1801 "phase2.tab.c"
+    break;
+
+  case 84: /* literal: char_literal  */
+#line 359 "phase2.y"
+               {(yyval.nonTerminal) = new tree("<literal>" , "<literal>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1807 "phase2.tab.c"
+    break;
+
+  case 85: /* literal: bool_literal  */
+#line 360 "phase2.y"
+               {(yyval.nonTerminal) = new tree("<literal>" , "<literal>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1813 "phase2.tab.c"
+    break;
+
+  case 86: /* id: TOKEN_ID  */
 #line 365 "phase2.y"
-                   {(yyval.nonTerminal) = new tree("<inTOKEN_literal>" , "<inTOKEN_literal>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1806 "phase2.tab.c"
+           {(yyval.nonTerminal) = new tree("<id>" , "<id>"); (yyval.nonTerminal)->addChild("TOKEN_ID" , (yyvsp[0].str));}
+#line 1819 "phase2.tab.c"
     break;
 
-  case 85: /* inTOKEN_literal: hex_literal  */
-#line 366 "phase2.y"
-              {(yyval.nonTerminal) = new tree("<inTOKEN_literal>" , "<inTOKEN_literal>"); (yyval.nonTerminal)->addChild((yyvsp[0].terminal));}
-#line 1812 "phase2.tab.c"
+  case 87: /* int_literal: deciamla_literal  */
+#line 369 "phase2.y"
+                   {(yyval.nonTerminal) = new tree("<int_literal>" , "<int_literal>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1825 "phase2.tab.c"
     break;
 
-  case 86: /* deciamla_literal: TOKEN_DECIMALCONST  */
+  case 88: /* int_literal: hex_literal  */
 #line 370 "phase2.y"
-                     {(yyval.terminal) = new node("<decimal_literal>" , "<decimal_literal>"); (yyval.terminal)->addChild("<TOKEN_DECIMALCONST>" , (yyvsp[0].str));}
-#line 1818 "phase2.tab.c"
+              {(yyval.nonTerminal) = new tree("<int_literal>" , "<int_literal>"); (yyval.nonTerminal)->addChild((yyvsp[0].nonTerminal));}
+#line 1831 "phase2.tab.c"
     break;
 
-  case 87: /* hex_literal: TOKEN_HEXADECIMALCONST  */
+  case 89: /* deciamla_literal: TOKEN_DECIMALCONST  */
 #line 374 "phase2.y"
-                         {(yyval.terminal) = new node("<hex_literal>" , "<string_literal>"); (yyval.terminal)->addChild("TOKEN_HEXADECIMALCONST" , (yyvsp[0].str));}
-#line 1824 "phase2.tab.c"
+                     {(yyval.nonTerminal) = new tree("<decimal_literal>" , "<decimal_literal>"); (yyval.nonTerminal)->addChild("<TOKEN_DECIMALCONST>" , (yyvsp[0].str));}
+#line 1837 "phase2.tab.c"
     break;
 
-  case 88: /* bool_literal: TOKEN_BOOLEANCONST  */
+  case 90: /* hex_literal: TOKEN_HEXADECIMALCONST  */
 #line 378 "phase2.y"
-                     {(yyval.terminal) = new node("<string_literal>" , "<string_literal>"); (yyval.terminal)->addChild("TOKEN_BOOLEANCONST" , (yyvsp[0].str));}
-#line 1830 "phase2.tab.c"
+                         {(yyval.nonTerminal) = new tree("<hex_literal>" , "<string_literal>"); (yyval.nonTerminal)->addChild("TOKEN_HEXADECIMALCONST" , (yyvsp[0].str));}
+#line 1843 "phase2.tab.c"
     break;
 
-  case 89: /* char_literal: TOKEN_CHARCONST  */
+  case 91: /* bool_literal: TOKEN_BOOLEANCONST  */
 #line 382 "phase2.y"
-                  {(yyval.terminal) = new node("<char_literal>" , "<char_literal>"); (yyval.terminal)->addChild("TOKEN_CHARCONST" , (yyvsp[0].str));}
-#line 1836 "phase2.tab.c"
+                     {(yyval.nonTerminal) = new tree("<string_literal>" , "<string_literal>"); (yyval.nonTerminal)->addChild("TOKEN_BOOLEANCONST" , (yyvsp[0].str));}
+#line 1849 "phase2.tab.c"
     break;
 
-  case 90: /* string_literal: TOKEN_STRINGCONST  */
+  case 92: /* char_literal: TOKEN_CHARCONST  */
 #line 386 "phase2.y"
-                  {(yyval.terminal) = new node("<string_literal>" , "<string_literal>"); (yyval.terminal)->addChild("TOKEN_STRINGCONST" , (yyvsp[0].str));}
-#line 1842 "phase2.tab.c"
+                  {(yyval.nonTerminal) = new tree("<char_literal>" , "<char_literal>"); (yyval.nonTerminal)->addChild("TOKEN_CHARCONST" , (yyvsp[0].str));}
+#line 1855 "phase2.tab.c"
+    break;
+
+  case 93: /* string_literal: TOKEN_STRINGCONST  */
+#line 390 "phase2.y"
+                    {(yyval.nonTerminal) = new tree("<string_literal>" , "<string_literal>"); (yyval.nonTerminal)->addChild("TOKEN_STRINGCONST" , (yyvsp[0].str));}
+#line 1861 "phase2.tab.c"
     break;
 
 
-#line 1846 "phase2.tab.c"
+#line 1865 "phase2.tab.c"
 
       default: break;
     }
@@ -2036,7 +2055,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 387 "phase2.y"
+#line 391 "phase2.y"
 
 
 

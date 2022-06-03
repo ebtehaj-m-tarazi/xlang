@@ -13,15 +13,13 @@
 	extern int yylineno;
 
   int input;
-  node *root;
+  tree *root;
 %}
 
 
 %union{
   char *str;
-  long long int number;
   tree* nonTerminal;
-  node* terminal;
 }
 
 %token<str> TOKEN_BOOLEANTYPE
@@ -64,11 +62,12 @@
 %token<str> TOKEN_HEXADECIMALCONST
 %token<str> TOKEN_DECIMALCONST
 
+
 %type<nonTerminal> block
-%type<nonTerminal>inTOKEN_literal 
+%type<nonTerminal>int_literal 
 %type<nonTerminal>literal
-%type<nonTerminal>callouTOKEN_args
-%type<nonTerminal>callouTOKEN_arg
+%type<nonTerminal>callout_args
+%type<nonTerminal>callout_arg
 %type<nonTerminal>bin_op
 %type<nonTerminal>location
 %type<nonTerminal>exprs
@@ -86,7 +85,6 @@
 %type<nonTerminal>method_decls
 %type<nonTerminal>method_decl
 %type<nonTerminal>method_type
-%type<nonTerminal>method_namee
 %type<nonTerminal>args
 %type<nonTerminal>arg
 %type<nonTerminal>variables
@@ -94,19 +92,21 @@
 %type<nonTerminal>field_decl
 %type<nonTerminal>program
 %type<nonTerminal>decl_list
+%type<nonTerminal>id 
+%type<nonTerminal>deciamla_literal 
+%type<nonTerminal>hex_literal
+%type<nonTerminal>bool_literal 
+%type<nonTerminal>char_literal
+%type<nonTerminal>string_literal
+%type<nonTerminal>rel_op
+%type<nonTerminal>eq_op
+%type<nonTerminal>cond_op
+%type<nonTerminal>arith_op
+%type<nonTerminal>assign_op
+%type<nonTerminal>type
+%type<nonTerminal>method_decls1
+%type<nonTerminal>main_decl
 
-%type<terminal>id 
-%type<terminal>deciamla_literal 
-%type<terminal>hex_literal
-%type<terminal>bool_literal 
-%type<terminal>char_literal
-%type<terminal>string_literal
-%type<terminal>rel_op
-%type<terminal>eq_op
-%type<terminal>cond_op
-%type<terminal>arith_op
-%type<terminal>assign_op
-%type<terminal>type
 
 
 
@@ -115,30 +115,30 @@
 %%
 /*============================program============================*/
 program:  
-  TOKEN_CLASS TOKEN_PROGRAMCLASS TOKEN_LCB decl_list TOKEN_RCB {$$ = new tree("<program>" , "<program>"); $$->addChild("TOKEN_CLASS" , $1)->addChild("TOKEN_PROGRAMCLASS" , $2)->addChild("TOKEN_LCB" , $3)->addOthersChild($4->getRoot())->addChild("TOKEN_RCB" , $5);
-  root = $$->getRoot();};
+  TOKEN_CLASS TOKEN_PROGRAMCLASS TOKEN_LCB decl_list TOKEN_RCB {$$ = new tree("<program>" , "<program>"); $$->addChild("TOKEN_CLASS" , $1)->addChild("TOKEN_PROGRAMCLASS" , $2)->addChild("TOKEN_LCB" , $3)->addOthersChild($4)->addChild("TOKEN_RCB" , $5);
+  root = $$;};
   
 
-decl_list:  {$$ = new tree("<decl_list>" , "<decl_list>");} | 
-  field_decl decl_list {$$ = new tree("<decl_list>" , "<decl_list>"); $$->addChild($1->getRoot())->addOthersChild($2->getRoot());} |
+decl_list: 
+  field_decl decl_list {$$ = new tree("<decl_list>" , "<decl_list>"); $$->addChild($1)->addOthersChild($2);} |
+
+  TOKEN_VOIDTYPE id TOKEN_LP args TOKEN_RP block method_decls1
+    {$$ = new tree("<decl_list>" , "<decl_list>");
+    tree* temp = new tree("<method_decl>" ,  "<method_decl>");
+    temp->addChild("TOKEN_VOIDTYPE" , $1)->addChild($2)->addChild("TOKEN_LP" , $3)->addOthersChild($4)->addChild("TOKEN_RP" , $5)->addChild($6);
+    $$->addChild(temp)->addOthersChild($7);} | 
    
-  TOKEN_VOIDTYPE method_namee TOKEN_LP args TOKEN_RP block method_decls
+  type id TOKEN_LP args TOKEN_RP block method_decls1
     {$$ = new tree("<decl_list>" , "<decl_list>");
-    node* temp = new node("<method_decl>" ,  "<method_decl>");
-    temp->addChild("TOKEN_VOIDTYPE" , $1)->addOthersChild($2->getRoot())->addChild("TOKEN_LP" , $3)->addOthersChild($4->getRoot())->addChild("TOKEN_RP" , $5)->addChild($6->getRoot());
-    $$->addChild(temp)->addOthersChild($7->getRoot());} |
+    tree* temp = new tree("<method_decl>" ,  "<method_decl>");
+    temp->addChild($1)->addChild($2)->addChild("TOKEN_LP" , $3)->addOthersChild($4)->addChild("TOKEN_RP" , $5)->addChild($6);
+    $$->addChild(temp)->addOthersChild($7);} | 
 
-  type TOKEN_MAINFUNC TOKEN_LP args TOKEN_RP block  method_decls 
+  main_decl method_decls 
     {$$ = new tree("<decl_list>" , "<decl_list>");
-    node* temp = new node("<method_decl>" ,  "<method_decl>");
-    temp->addChild($1)->addChild("TOKEN_MAINFUNC" , $2)->addChild("TOKEN_LP" , $3)->addOthersChild($4->getRoot())->addChild("TOKEN_RP" , $5)->addChild($6->getRoot());
-    $$->addChild(temp)->addOthersChild($7->getRoot());} |
-
-  type id  TOKEN_LP args TOKEN_RP block method_decls 
-    {$$ = new tree("<decl_list>" , "<decl_list>");
-    node* temp = new node("<method_decl>" ,  "<method_decl>");
-    temp->addChild($1)->addChild($2)->addChild("TOKEN_LP" , $3)->addOthersChild($4->getRoot())->addChild("TOKEN_RP" , $5)->addChild($6->getRoot());
-    $$->addChild(temp)->addOthersChild($7->getRoot());};
+    tree* temp = new tree("<method_decl>" ,  "<method_decl>");
+    temp->addOthersChild($1);
+    $$->addChild(temp)->addOthersChild($2);};
 
 
 
@@ -146,23 +146,23 @@ decl_list:  {$$ = new tree("<decl_list>" , "<decl_list>");} |
 /*============================field decleration============================*/
 field_decl : 
   type variables TOKEN_SEMICOLON 
-    {$$ = new tree("<field_decl>" , "<field_decl>"); $$->addChild($1)->addOthersChild($2->getRoot())->addChild("TOKEN_SEMICOLON" , $3);};
+    {$$ = new tree("<field_decl>" , "<field_decl>"); $$->addChild($1)->addOthersChild($2)->addChild("TOKEN_SEMICOLON" , $3);};
 
 
 variables : 
   variable 
-    {$$ = new tree("<variables>" , "<variables>"); $$->addOthersChild($1->getRoot());} |
+    {$$ = new tree("<variables>" , "<variables>"); $$->addOthersChild($1);} |
 
   variable TOKEN_COMMA variables 
-    {$$ = new tree("<variables>" , "<variables>"); $$->addOthersChild($1->getRoot())->addChild("TOKEN_COMMA" , $2)->addOthersChild($3->getRoot());};
+    {$$ = new tree("<variables>" , "<variables>"); $$->addOthersChild($1)->addChild("TOKEN_COMMA" , $2)->addOthersChild($3);};
 
 
 variable :  
   id 
     {$$ = new tree("<variable>" , "<variable>"); $$->addChild($1);} | 
 
-  id TOKEN_LB inTOKEN_literal TOKEN_RB 
-    {$$ = new tree("<variable>" , "<variable>"); $$->addChild($1)->addChild("TOKEN_LB" , $2)->addChild($3->getRoot())->addChild("TOKEN_RB" , $4);};
+  id TOKEN_LB int_literal TOKEN_RB 
+    {$$ = new tree("<variable>" , "<variable>"); $$->addChild($1)->addChild("TOKEN_LB" , $2)->addChild($3)->addChild("TOKEN_RB" , $4);};
 
 
 
@@ -171,27 +171,29 @@ variable :
 /*============================method decleration============================*/
 method_decls : {$$ = new tree("<method_decls>" , "<method_decls>");} | 
   method_decl method_decls
-    {$$ = new tree("<method_decls>" , "<method_decls>"); $$->addChild($1->getRoot())->addOthersChild($2->getRoot());};
+    {$$ = new tree("<method_decls>" , "<method_decls>"); $$->addChild($1)->addOthersChild($2);};
 
+method_decls1:
+  method_decl method_decls1 
+    {$$ = new tree("<method_decls1>" , "<method_decls1>"); $$->addChild($1)->addOthersChild($2);} |
+  main_decl method_decls
+    {$$ = new tree("<method_decls1>" , "<method_decls1>"); $$->addOthersChild($1)->addOthersChild($2);};
 
 method_decl : 
-  method_type method_namee TOKEN_LP args TOKEN_RP block 
-    {$$ = new tree("<method_decl>" , "<method_decl>"); $$->addOthersChild($1->getRoot())->addOthersChild($2->getRoot())->addChild("TOKEN_LP" , $3)->addOthersChild($4->getRoot())->addChild("TOKEN_RP" , $5)->addChild($6->getRoot());};
+  method_type id TOKEN_LP args TOKEN_RP block 
+    {$$ = new tree("<method_decl>" , "<method_decl>"); $$->addOthersChild($1)->addChild($2)->addChild("TOKEN_LP" , $3)->addOthersChild($4)->addChild("TOKEN_RP" , $5)->addChild($6);};
 
+main_decl:
+  TOKEN_VOIDTYPE TOKEN_MAINFUNC TOKEN_LP TOKEN_RP block
+    {$$ = new tree("<main_decls1>" , "<main_decls1>"); $$->addChild("TOKEN_VOIDTYPE" , $1)->addChild("TOKEN_MAINFUNC" , $2)->addChild("TOKEN_LP" , $3)->addChild("TOKEN_RP" , $4)->addChild($5);};
 
 method_type : 
   type {$$ = new tree("<method_type>" , "<method_type>"); $$->addChild($1);} |
-
   TOKEN_VOIDTYPE {$$ = new tree("<method_type>" , "<method_type>"); $$->addChild("TOKEN_VOIDTYPE" , $1);};
 
-
-method_namee : 
-  TOKEN_MAINFUNC {$$ = new tree("<method_namee>" , "<method_namee>"); $$->addChild("TOKEN_MAINFUNC" , $1);}| 
-  id {$$ = new tree("<method_namee>" , "<method_namee>"); $$->addChild($1);};
-
-
-args : {$$ = new tree("<args>" , "<args>");} | 
-  arg TOKEN_COMMA args {$$ = new tree("<args>" , "<args>"); $$->addChild($1->getRoot())->addChild("TOKEN_COMMA" , $2)->addOthersChild($3->getRoot());};
+args : {$$ = new tree("<args>" , "<args>");} |
+  arg {$$ = new tree("<args>" , "<args>"); $$->addOthersChild($1);} |
+  arg TOKEN_COMMA args {$$ = new tree("<args>" , "<args>"); $$->addOthersChild($1)->addChild("TOKEN_COMMA" , $2)->addOthersChild($3);};
 
 
 arg : 
@@ -200,76 +202,76 @@ arg :
 
 /*============================block============================*/
 block: TOKEN_LCB var_decls statements TOKEN_RCB
-  {$$ = new tree("<block>" , "<block>"); $$->addChild("TOKEN_LCB" , $1)->addOthersChild($2->getRoot())->addOthersChild($3->getRoot())->addChild("TOKEN_RCB" , $4);};
+  {$$ = new tree("<block>" , "<block>"); $$->addChild("TOKEN_LCB" , $1)->addOthersChild($2)->addOthersChild($3)->addChild("TOKEN_RCB" , $4);};
 
 
 /*============================variable decleration============================*/
 var_decls: {$$ = new tree("<var_decls>" , "<var_decls>");} | 
-  var_decl var_decls {$$ = new tree("<var_decls>" , "<var_decls>"); $$->addChild($1->getRoot())->addOthersChild($2->getRoot());};
+  var_decl var_decls {$$ = new tree("<var_decls>" , "<var_decls>"); $$->addChild($1)->addOthersChild($2);};
 
 var_decl: 
-  type ids TOKEN_SEMICOLON {$$ = new tree("<var_decl>" , "<var_decl>"); $$->addChild($1)->addOthersChild($2->getRoot())->addChild("TOKEN_SEMICOLON" , $3);};
+  type ids TOKEN_SEMICOLON {$$ = new tree("<var_decl>" , "<var_decl>"); $$->addChild($1)->addOthersChild($2)->addChild("TOKEN_SEMICOLON" , $3);};
 
 ids: 
   id  {$$ = new tree("<ids>" , "<ids>"); $$->addChild($1);} | 
-  id TOKEN_COMMA ids {$$ = new tree("<ids>" , "<ids>"); $$->addChild($1)->addChild("TOKEN_COMMA" , $2)->addOthersChild($3->getRoot());};
+  id TOKEN_COMMA ids {$$ = new tree("<ids>" , "<ids>"); $$->addChild($1)->addChild("TOKEN_COMMA" , $2)->addOthersChild($3);};
 
 
 
 /*============================type============================*/
 type: 
-  TOKEN_INTTYPE {$$ = new node("<type>" , "<type>"); $$->addChild("TOKEN_INTTYPE" , $1);}| 
-  TOKEN_BOOLEANTYPE {$$ = new node("<type>" , "<type>"); $$->addChild("TOKEN_BOOLEANTYPE" , $1);};
+  TOKEN_INTTYPE {$$ = new tree("<type>" , "<type>"); $$->addChild("TOKEN_INTTYPE" , $1);}| 
+  TOKEN_BOOLEANTYPE {$$ = new tree("<type>" , "<type>"); $$->addChild("TOKEN_BOOLEANTYPE" , $1);};
 
 
 
 /*============================statement============================*/
 statements: {$$ = new tree("<statements>" , "<statements>");} | 
-  statement statements {$$ = new tree("<statements>" , "<statements>"); $$->addChild($1->getRoot())->addOthersChild($2->getRoot());};;
+  statement statements {$$ = new tree("<statements>" , "<statements>"); $$->addChild($1)->addOthersChild($2);};;
 
 statement: 
   location assign_op expr TOKEN_SEMICOLON 
-    {$$ = new tree("<statement>" , "<statement>"); $$->addChild($1->getRoot())->addChild($2)->addChild($3->getRoot())->addChild("TOKEN_SEMICOLON" , $4);}|
+    {$$ = new tree("<statement>" , "<statement>"); $$->addChild($1)->addChild($2)->addChild($3)->addChild("TOKEN_SEMICOLON" , $4);}|
   
   method_call TOKEN_SEMICOLON 
-    {$$ = new tree("<statement>" , "<statement>"); $$->addChild($1->getRoot())->addChild("TOKEN_SEMICOLON" , $2);} |
+    {$$ = new tree("<statement>" , "<statement>"); $$->addChild($1)->addChild("TOKEN_SEMICOLON" , $2);} |
   TOKEN_IFCONDITION TOKEN_LP expr TOKEN_RP block else_block 
-    {$$ = new tree("<statement>" , "<statement>"); $$->addChild("TOKEN_IFCONDITION" , $1)->addChild("TOKEN_LP" , $2)->addChild($3->getRoot())->addChild("TOKEN_RP" , $4)->addChild($5->getRoot())->addOthersChild($6->getRoot());} |
+    {$$ = new tree("<statement>" , "<statement>"); $$->addChild("TOKEN_IFCONDITION" , $1)->addChild("TOKEN_LP" , $2)->addChild($3)->addChild("TOKEN_RP" , $4)->addChild($5)->addOthersChild($6);} |
   
   TOKEN_LOOP id TOKEN_ASSIGNOP expr TOKEN_COMMA expr block 
-    {$$ = new tree("<statement>" , "<statement>"); $$->addChild("TOKEN_LOOP" , $1)->addChild($2)->addChild("TOKEN_ASSIGNOP" , $3)->addChild($4->getRoot())->addChild("TOKEN_COMMA" , $5)->addChild($6->getRoot())->addChild($7->getRoot());}|
+    {$$ = new tree("<statement>" , "<statement>"); $$->addChild("TOKEN_LOOP" , $1)->addChild($2)->addChild("TOKEN_ASSIGNOP" , $3)->addChild($4)->addChild("TOKEN_COMMA" , $5)->addChild($6)->addChild($7);}|
   
-  TOKEN_RETURN nexpr TOKEN_SEMICOLON {$$ = new tree("<statement>" , "<statement>"); $$->addChild("TOKEN_RETURN" , $1)->addOthersChild($2->getRoot())->addChild("TOKEN_SEMICOLON" , $3);} |
+  TOKEN_RETURN nexpr TOKEN_SEMICOLON {$$ = new tree("<statement>" , "<statement>"); $$->addChild("TOKEN_RETURN" , $1)->addOthersChild($2)->addChild("TOKEN_SEMICOLON" , $3);} |
   
   TOKEN_BREAKSTMT TOKEN_SEMICOLON {$$ = new tree("<statement>" , "<statement>"); $$->addChild("TOKEN_BREAKSTMT" , $1)->addChild("TOKEN_SEMICOLON" , $2);} |
   
   TOKEN_CONTINUESTMT TOKEN_SEMICOLON {$$ = new tree("<statement>" , "<statement>"); $$->addChild("TOKEN_CONTINUESTMT" , $1)->addChild("TOKEN_SEMICOLON" , $2);} |
   
-  block {$$ = new tree("<statement>" , "<statement>"); $$->addChild($1->getRoot());};
+  block {$$ = new tree("<statement>" , "<statement>"); $$->addChild($1);};
 
 
 nexpr: {$$ = new tree("<nexpr>" , "<nexpr>");} | 
-  expr {$$ = new tree("<nexpr>" , "<nexpr>"); $$->addChild($1->getRoot());};
+  expr {$$ = new tree("<nexpr>" , "<nexpr>"); $$->addChild($1);};
 
 else_block: {$$ = new tree("<else_block>" , "<else_block>");} |  
-  TOKEN_ELSECONDITION block {$$ = new tree("<else_block>" , "<else_block>"); $$->addChild("TOKEN_ELSECONDITION" , $1)->addChild($2->getRoot());};
+  TOKEN_ELSECONDITION block {$$ = new tree("<else_block>" , "<else_block>"); $$->addChild("TOKEN_ELSECONDITION" , $1)->addChild($2);};
 
 
 /*============================assignment operator============================*/
 assign_op: 
-  TOKEN_ASSIGNOP {$$ = new node("<assign_op>" , "<assign_op>"); $$->addChild("TOKEN_ASSIGNOP" , $1);} | 
-  TOKEN_MINUSASSIGNOP {$$ = new node("<assign_op>" , "<assign_op>"); $$->addChild("TOKEN_MINUSASSIGNOP" , $1);} | 
-  TOKEN_PLUSASSIGNOP {$$ = new node("<assign_op>" , "<assign_op>"); $$->addChild("TOKEN_PLUSASSIGNOP" , $1);};
+  TOKEN_ASSIGNOP {$$ = new tree("<assign_op>" , "<assign_op>"); $$->addChild("TOKEN_ASSIGNOP" , $1);} | 
+  TOKEN_MINUSASSIGNOP {$$ = new tree("<assign_op>" , "<assign_op>"); $$->addChild("TOKEN_MINUSASSIGNOP" , $1);} | 
+  TOKEN_PLUSASSIGNOP {$$ = new tree("<assign_op>" , "<assign_op>"); $$->addChild("TOKEN_PLUSASSIGNOP" , $1);};
 
 
 
 //method call
 method_call: 
   method_name TOKEN_LP exprs TOKEN_RP 
-    {$$ = new tree("<method_call>" , "<method_call>"); $$->addChild($1->getRoot())->addChild("TOKEN_LP" , $2)->addOthersChild($3->getRoot())->addChild("TOKEN_RP" , $4);} | 
+    {$$ = new tree("<method_call>" , "<method_call>"); $$->addChild($1)->addChild("TOKEN_LP" , $2)->addOthersChild($3)->addChild("TOKEN_RP" , $4);} | 
   
-  TOKEN_CALLOUT TOKEN_LP string_literal TOKEN_COMMA callouTOKEN_args TOKEN_RP 
-    {$$ = new tree("<method_call>" , "<method_call>"); $$->addChild("TOKEN_CALLOUT" , $1)->addChild("TOKEN_LP" , $2)->addChild($3)->addChild("TOKEN_COMMA" , $4)->addOthersChild($5->getRoot())->addChild("TOKEN_RP" , $6);} | 
+  TOKEN_CALLOUT TOKEN_LP string_literal TOKEN_COMMA callout_args TOKEN_RP 
+    {$$ = new tree("<method_call>" , "<method_call>"); $$->addChild("TOKEN_CALLOUT" , $1)->addChild("TOKEN_LP" , $2)->addChild($3)->addChild("TOKEN_COMMA" , $4)->addOthersChild($5)->addChild("TOKEN_RP" , $6);} | 
   
   TOKEN_CALLOUT TOKEN_LP string_literal TOKEN_RP 
     {$$ = new tree("<method_call>" , "<method_call>"); $$->addChild("TOKEN_CALLOUT" , $1)->addChild("TOKEN_LP" , $2)->addChild($3)->addChild("TOKEN_RP" , $4);}; 
@@ -284,35 +286,37 @@ method_name:
 /*============================location============================*/
 location: 
   id  {$$ = new tree("<location>" , "<location>"); $$->addChild($1);};| 
-  id TOKEN_LB expr TOKEN_RB {$$ = new tree("<location>" , "<location>"); $$->addChild($1)->addChild("TOKEN_LB" , $2)->addChild($3->getRoot())->addChild("TOKEN_RB" , $4);};;
+  id TOKEN_LB expr TOKEN_RB {$$ = new tree("<location>" , "<location>"); $$->addChild($1)->addChild("TOKEN_LB" , $2)->addChild($3)->addChild("TOKEN_RB" , $4);};;
 
 
 /*============================expression============================*/
 exprs: {$$ = new tree("<exprs>" , "<exprs>");} | 
-  expr TOKEN_COMMA exprs {$$ = new tree("<exprs>" , "<exprs>"); $$->addChild($1->getRoot())->addChild("TOKEN_COMMA" , $2)->addOthersChild($3->getRoot());};
+  expr {$$ = new tree("<exprs>" , "<exprs>"); $$->addChild($1);} |
+  expr TOKEN_COMMA exprs {$$ = new tree("<exprs>" , "<exprs>"); $$->addChild($1)->addChild("TOKEN_COMMA" , $2)->addOthersChild($3);};
 
 expr: 
-  expr bin_op expr1 {$$ = new tree("<expr>" , "<expr>"); $$->addChild($1->getRoot())->addChild($2->getRoot())->addChild($3->getRoot());} | 
-  expr1 {$$ = new tree("<expr>" , "<expr>"); $$->addOthersChild($1->getRoot());};
+  expr bin_op expr1 {$$ = new tree("<expr>" , "<expr>"); $$->addChild($1)->addChild($2)->addChild($3);} | 
+  expr1 {$$ = new tree("<expr>" , "<expr>"); $$->addOthersChild($1);};
 
 expr1:  
-  location {$$ = new tree("<expr>" , "<expr>"); $$->addChild($1->getRoot());} |
-  method_call {$$ = new tree("<expr>" , "<expr>"); $$->addChild($1->getRoot());} |
-  literal {$$ = new tree("<expr>" , "<expr>"); $$->addChild($1->getRoot());} |
-  TOKEN_MINUSOP expr1 {$$ = new tree("<expr>" , "<expr>"); $$->addChild("TOKEN_MiNUSOP" , $1)->addChild($2->getRoot());} |
-  TOKEN_LOGICOP expr1 {$$ = new tree("<expr>" , "<expr>"); $$->addChild("TOKEN_LOGICOP" , $1)->addChild($2->getRoot());} |
-  TOKEN_LP expr TOKEN_RP {$$ = new tree("<expr>" , "<expr>"); $$->addChild("TOKEN_LP" , $1)->addChild($2->getRoot())->addChild("TOKEN_RP" , $3);};
+  location {$$ = new tree("<expr>" , "<expr>"); $$->addChild($1);} |
+  method_call {$$ = new tree("<expr>" , "<expr>"); $$->addChild($1);} |
+  literal {$$ = new tree("<expr>" , "<expr>"); $$->addChild($1);} |
+  TOKEN_MINUSOP expr1 {$$ = new tree("<expr>" , "<expr>"); $$->addChild("TOKEN_MiNUSOP" , $1)->addChild($2);} |
+  TOKEN_LOGICOP expr1 {$$ = new tree("<expr>" , "<expr>"); $$->addChild("TOKEN_LOGICOP" , $1)->addChild($2);} |
+  TOKEN_LP expr TOKEN_RP {$$ = new tree("<expr>" , "<expr>"); $$->addChild("TOKEN_LP" , $1)->addChild($2)->addChild("TOKEN_RP" , $3);};
 
 
 
 /*============================callout argument============================*/
-callouTOKEN_args: {$$ = new tree("<callouTOKEN_args>" , "<callouTOKEN_args>");} |
-  callouTOKEN_arg TOKEN_COMMA callouTOKEN_args 
-    {$$ = new tree("<callouTOKEN_args>" , "<callouTOKEN_args>"); $$->addChild($1->getRoot())->addChild("TOKEN_COMMA" , $2)->addOthersChild($3->getRoot());};
+callout_args: {$$ = new tree("<callout_args>" , "<callout_args>");} |
+  callout_arg {$$ = new tree("<callout_args>" , "<callout_args>"); $$->addChild($1);} |
+  callout_arg TOKEN_COMMA callout_args 
+    {$$ = new tree("<callout_args>" , "<callout_args>"); $$->addChild($1)->addChild("TOKEN_COMMA" , $2)->addOthersChild($3);};
 
-callouTOKEN_arg: 
-  expr {$$ = new tree("<callouTOKEN_arg>" , "<callouTOKEN_arg>"); $$->addChild($1->getRoot());} | 
-  string_literal {$$ = new tree("<callouTOKEN_arg>" , "<callouTOKEN_arg>"); $$->addChild($1);};
+callout_arg: 
+  expr {$$ = new tree("<callout_arg>" , "<callout_arg>"); $$->addChild($1);} | 
+  string_literal {$$ = new tree("<callout_arg>" , "<callout_arg>"); $$->addChild($1);};
 
 
 
@@ -326,64 +330,64 @@ bin_op:
 
 /*============================arithmetic operator============================*/
 arith_op: 
-  TOKEN_MODULSOP {$$ = new node("<arith_op>" , "<arith_op>"); $$->addChild("TOKEN_MODULSOP" , $1);} | 
-  TOKEN_DIVISIONOP {$$ = new node("<arith_op>" , "<arith_op>"); $$->addChild("TOKEN_DIVISIONOP" , $1);} | 
-  TOKEN_MULTIPLEOP {$$ = new node("<arith_op>" , "<arith_op>"); $$->addChild("TOKEN_MULTIPLEOP" , $1);} | 
-  TOKEN_MINUSOP {$$ = new node("<arith_op>" , "<arith_op>"); $$->addChild("TOKEN_MINUSOP" , $1);} | 
-  TOKEN_PLUSOP {$$ = new node("<arith_op>" , "<arith_op>"); $$->addChild("TOKEN_PLUSOP" , $1);};
+  TOKEN_MODULSOP {$$ = new tree("<arith_op>" , "<arith_op>"); $$->addChild("TOKEN_MODULSOP" , $1);} | 
+  TOKEN_DIVISIONOP {$$ = new tree("<arith_op>" , "<arith_op>"); $$->addChild("TOKEN_DIVISIONOP" , $1);} | 
+  TOKEN_MULTIPLEOP {$$ = new tree("<arith_op>" , "<arith_op>"); $$->addChild("TOKEN_MULTIPLEOP" , $1);} | 
+  TOKEN_MINUSOP {$$ = new tree("<arith_op>" , "<arith_op>"); $$->addChild("TOKEN_MINUSOP" , $1);} | 
+  TOKEN_PLUSOP {$$ = new tree("<arith_op>" , "<arith_op>"); $$->addChild("TOKEN_PLUSOP" , $1);};
 
 
 
 /*============================relation operator============================*/
 rel_op: 
-  TOKEN_RELATIONOP {$$ = new node("<rel_op>" , "<rel_op>"); $$->addChild("TOKEN_RELATIONOP" , $1);};
+  TOKEN_RELATIONOP {$$ = new tree("<rel_op>" , "<rel_op>"); $$->addChild("TOKEN_RELATIONOP" , $1);};
 
 
 /*============================equality operator============================*/
 eq_op: 
-  TOKEN_EQUALITYOP {$$ = new node("<eq_op>" , "<eq_op>"); $$->addChild("TOKEN_EQUALITYOP" , $1);};
+  TOKEN_EQUALITYOP {$$ = new tree("<eq_op>" , "<eq_op>"); $$->addChild("TOKEN_EQUALITYOP" , $1);};
 
 
 /*============================conditional operator============================*/
 cond_op: 
-  TOKEN_CONDITIONOP {$$ = new node("<cond_op>" , "<cond_op>"); $$->addChild("TOKEN_CONDITIONOP" , $1);};
+  TOKEN_CONDITIONOP {$$ = new tree("<cond_op>" , "<cond_op>"); $$->addChild("TOKEN_CONDITIONOP" , $1);};
 
 
 /*============================literal============================*/
 literal: 
-  inTOKEN_literal {$$ = new tree("<literal>" , "<literal>"); $$->addChild($1->getRoot());} | 
+  int_literal {$$ = new tree("<literal>" , "<literal>"); $$->addChild($1);} | 
   char_literal {$$ = new tree("<literal>" , "<literal>"); $$->addChild($1);} | 
   bool_literal {$$ = new tree("<literal>" , "<literal>"); $$->addChild($1);};
 
 
 /*============================id============================*/
 id: 
-  TOKEN_ID {$$ = new node("<id>" , "<id>"); $$->addChild("TOKEN_ID" , $1);};
+  TOKEN_ID {$$ = new tree("<id>" , "<id>"); $$->addChild("TOKEN_ID" , $1);};
 
 /*============================int literal============================*/
-inTOKEN_literal: 
-  deciamla_literal {$$ = new tree("<inTOKEN_literal>" , "<inTOKEN_literal>"); $$->addChild($1);}| 
-  hex_literal {$$ = new tree("<inTOKEN_literal>" , "<inTOKEN_literal>"); $$->addChild($1);};
+int_literal: 
+  deciamla_literal {$$ = new tree("<int_literal>" , "<int_literal>"); $$->addChild($1);}| 
+  hex_literal {$$ = new tree("<int_literal>" , "<int_literal>"); $$->addChild($1);};
 
 /*============================program============================*/
 deciamla_literal: 
-  TOKEN_DECIMALCONST {$$ = new node("<decimal_literal>" , "<decimal_literal>"); $$->addChild("<TOKEN_DECIMALCONST>" , $1);};
+  TOKEN_DECIMALCONST {$$ = new tree("<decimal_literal>" , "<decimal_literal>"); $$->addChild("<TOKEN_DECIMALCONST>" , $1);};
 
 /*============================hex literal============================*/
 hex_literal: 
-  TOKEN_HEXADECIMALCONST {$$ = new node("<hex_literal>" , "<string_literal>"); $$->addChild("TOKEN_HEXADECIMALCONST" , $1);};
+  TOKEN_HEXADECIMALCONST {$$ = new tree("<hex_literal>" , "<string_literal>"); $$->addChild("TOKEN_HEXADECIMALCONST" , $1);};
 
 /*============================bool literal============================*/
 bool_literal: 
-  TOKEN_BOOLEANCONST {$$ = new node("<string_literal>" , "<string_literal>"); $$->addChild("TOKEN_BOOLEANCONST" , $1);};
+  TOKEN_BOOLEANCONST {$$ = new tree("<string_literal>" , "<string_literal>"); $$->addChild("TOKEN_BOOLEANCONST" , $1);};
 
 /*============================char literal============================*/
 char_literal: 
-  TOKEN_CHARCONST {$$ = new node("<char_literal>" , "<char_literal>"); $$->addChild("TOKEN_CHARCONST" , $1);};
+  TOKEN_CHARCONST {$$ = new tree("<char_literal>" , "<char_literal>"); $$->addChild("TOKEN_CHARCONST" , $1);};
 
 /*============================string literal============================*/
 string_literal: 
-TOKEN_STRINGCONST {$$ = new node("<string_literal>" , "<string_literal>"); $$->addChild("TOKEN_STRINGCONST" , $1);};
+  TOKEN_STRINGCONST {$$ = new tree("<string_literal>" , "<string_literal>"); $$->addChild("TOKEN_STRINGCONST" , $1);};
 %%
 
 

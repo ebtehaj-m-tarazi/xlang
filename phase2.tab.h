@@ -104,11 +104,9 @@ union YYSTYPE
 #line 20 "phase2.y"
 
   char *str;
-  long long int number;
   tree* nonTerminal;
-  node* terminal;
 
-#line 112 "phase2.tab.h"
+#line 110 "phase2.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
