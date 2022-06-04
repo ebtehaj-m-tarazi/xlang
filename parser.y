@@ -227,7 +227,7 @@ type:
 
 /*============================statement============================*/
 statements: {$$ = new tree("<statements>" , "<statements>");} | 
-  statement statements {$$ = new tree("<statements>" , "<statements>"); $$->addChild($1)->addOthersChild($2);};;
+  statement statements {$$ = new tree("<statements>" , "<statements>"); $$->addChild($1)->addOthersChild($2);};
 
 statement: 
   location assign_op expr TOKEN_SEMICOLON 
@@ -285,8 +285,8 @@ method_name:
 
 /*============================location============================*/
 location: 
-  id  {$$ = new tree("<location>" , "<location>"); $$->addChild($1);};| 
-  id TOKEN_LB expr TOKEN_RB {$$ = new tree("<location>" , "<location>"); $$->addChild($1)->addChild("TOKEN_LB" , $2)->addChild($3)->addChild("TOKEN_RB" , $4);};;
+  id  {$$ = new tree("<location>" , "<location>"); $$->addChild($1);} | 
+  id TOKEN_LB expr TOKEN_RB {$$ = new tree("<location>" , "<location>"); $$->addChild($1)->addChild("TOKEN_LB" , $2)->addChild($3)->addChild("TOKEN_RB" , $4);};
 
 
 /*============================expression============================*/
