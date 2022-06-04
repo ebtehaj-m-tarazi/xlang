@@ -4,7 +4,7 @@ class Program {
   }
   void main(){
     int a , b;
-    a = 3;
+    a = 1;
     b = 3;
     add(a);
   }
