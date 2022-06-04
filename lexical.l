@@ -4,7 +4,7 @@
   #include <iostream>
   using namespace std;
 
-  #include "phase2.tab.h"
+  #include "parser.tab.h"
 %}
 
 char [ -~]{-}[\\"']|\\t|\\n|\\\\|\\'|[\\]["]
