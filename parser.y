@@ -393,12 +393,12 @@ string_literal:
 
 int main(int argc, char **argv){
   input = atol(argv[1]);
-
   FILE * fr = fopen("input.xlang" , "r");
   yyin = fr;
   yyparse();
-
-  preorderTraversal(atol(argv[1]) , root);
+  
+  tree_print(atol(argv[1]),"  " ,1, root);
+ 
   cout << endl;
 }
 

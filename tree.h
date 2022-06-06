@@ -19,9 +19,9 @@ public:
   tree* addChild(string _tokenName , string _tokenValue);
   tree* addChild(tree *child);
   tree* addOthersChild(tree* other);
-
   void deleteChild(tree *_root);
   void deletChildren();
 };
 
 void preorderTraversal(int input , tree* _root = NULL);
+void tree_print(int input,string prefix,bool last_child,tree * _root=NULL);

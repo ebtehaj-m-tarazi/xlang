@@ -65,3 +65,28 @@ void preorderTraversal(int input , tree* _root){
   for(int i = 0; i < _root->getChildren().size(); i++)
     preorderTraversal(input , _root->getChildren()[i]);
 }
+void  tree_print(int input,string prefix,bool last_child,tree * _root){
+
+  if(_root==NULL)
+    return ;
+  string t;
+  if(!last_child)
+    t="\u251C";
+  else
+    t="\u2514";
+  string l="\u2502  ";
+  cout<<t<<_root->getToken(!input) << endl;
+  
+  for(int i = 0; i < _root->getChildren().size(); i++){
+    cout<<prefix<<l<<endl;
+    cout<<prefix;
+    if(i!= _root->getChildren().size()-1)
+    {
+      tree_print(input ,prefix+l,0, _root->getChildren()[i]);
+    }
+    else
+    {
+      tree_print(input ,prefix+"   ",1, _root->getChildren()[i]);
+    }
+  }
+}
