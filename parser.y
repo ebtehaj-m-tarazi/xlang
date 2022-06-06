@@ -177,7 +177,7 @@ method_decls1:
   method_decl method_decls1 
     {$$ = new tree("<method_decls1>" , "<method_decls1>"); $$->addChild($1)->addOthersChild($2);} |
   main_decl method_decls
-    {$$ = new tree("<method_decls1>" , "<method_decls1>"); $$->addOthersChild($1)->addOthersChild($2);};
+    {$$ = new tree("<method_decls1>" , "<method_decls1>"); $$->addChild($1)->addOthersChild($2);};
 
 method_decl : 
   method_type id TOKEN_LP args TOKEN_RP block 
@@ -185,7 +185,7 @@ method_decl :
 
 main_decl:
   TOKEN_VOIDTYPE TOKEN_MAINFUNC TOKEN_LP TOKEN_RP block
-    {$$ = new tree("<main_decls1>" , "<main_decls1>"); $$->addChild("TOKEN_VOIDTYPE" , $1)->addChild("TOKEN_MAINFUNC" , $2)->addChild("TOKEN_LP" , $3)->addChild("TOKEN_RP" , $4)->addChild($5);};
+    {$$ = new tree("<method_decl>" , "<method_decl>"); $$->addChild("TOKEN_VOIDTYPE" , $1)->addChild("TOKEN_MAINFUNC" , $2)->addChild("TOKEN_LP" , $3)->addChild("TOKEN_RP" , $4)->addChild($5);};
 
 method_type : 
   type {$$ = new tree("<method_type>" , "<method_type>"); $$->addChild($1);} |
@@ -265,7 +265,7 @@ assign_op:
 
 
 
-//method call
+/*============================method call============================*/
 method_call: 
   method_name TOKEN_LP exprs TOKEN_RP 
     {$$ = new tree("<method_call>" , "<method_call>"); $$->addChild($1)->addChild("TOKEN_LP" , $2)->addOthersChild($3)->addChild("TOKEN_RP" , $4);} | 
